@@ -14,9 +14,11 @@ namespace RSAMessageApp
 {
     public partial class Kayıt : Form
     {
+        private RSACryptoServiceProvider rsa; // Anahtar çiftini saklamak için
         public Kayıt()
         {
             InitializeComponent();
+            rsa = new RSACryptoServiceProvider(); // Anahtar çiftini oluştur
         }
 
         // SQL Server bağlantısı 
@@ -27,60 +29,56 @@ namespace RSAMessageApp
 
         private void BtnRegister_Click(object sender, EventArgs e)
         {
-            RegisterUser(TxtUsername.Text, TxtPassword.Text);    
+            string username = TxtUsername.Text;
+            string password = TxtPassword.Text;
 
+            RegisterUser(username, password);
 
-            //Kullanıcı şifresini SHA-256 ile hashleyen fonksiyon
-            void RegisterUser(string username, string password)
+        }
+
+        //Kullanıcı şifresini SHA-256 ile hashleyen fonksiyon
+        void RegisterUser(string username, string password)
+        {
+            byte[] hashedPassword = HashPassword(password);
+            string hashedPasswordString = Convert.ToBase64String(hashedPassword);
+
+            string publicKey = rsa.ToXmlString(false); // Public anahtar
+            string privateKey = rsa.ToXmlString(true); // Private anahtar
+
+            SaveUserToDatabase(username, hashedPasswordString, publicKey, privateKey);
+
+            MessageBox.Show("Kayıt başarılı", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
+        byte[] HashPassword(string password)
+        {
+            using (SHA256 sha256 = SHA256.Create())
             {
-                byte[] hashedPassword = HashPassword(password);
+                //Girilen şifreyi byte dizisine çevirme
+                byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
+                return sha256.ComputeHash(passwordBytes);
+            }
+        }
 
-                string hashedPasswordString = Convert.ToBase64String(hashedPassword);
+        void SaveUserToDatabase(string username, string hashedPassword, string publicKey, string privateKey)
+        {
+            baglanti.Open();
 
-                MessageBox.Show(hashedPasswordString);
+            string query = "INSERT INTO TBLUSERS (Username, PasswordHash, PublicKey, PrivateKey) VALUES (@Username, @HashedPassword, @PublicKey, @PrivateKey)";
+            using (SqlCommand command = new SqlCommand(query, baglanti))
+            {
+                command.Parameters.AddWithValue("@Username", username);
+                command.Parameters.AddWithValue("@HashedPassword", hashedPassword);
+                command.Parameters.AddWithValue("@PublicKey", publicKey);
+                command.Parameters.AddWithValue("@PrivateKey", privateKey);
 
-                //Veritabanına kayıt işlemi 
-                SaveUserToDatabase(username, hashedPasswordString);
+                command.ExecuteNonQuery();
             }
 
-
-            byte[] HashPassword(string password)
-            {
-                using (SHA256 sha256 = SHA256.Create())
-                {
-                    //Girilen şifreyi byte dizisine çevirme
-                    byte[] passwordBytes = Encoding.UTF8.GetBytes(password);
-                    return sha256.ComputeHash(passwordBytes);
-                }
-            }
-
-
-            //Kullanıcıyı veritabanına kaydetme
-            void SaveUserToDatabase(string username, string hashedPassword)
-            {
-                /*string connectionString = @"Data Source=Vural\SQLEXPRESS;Initial Catalog=DbRsaMessage;Integrated Security=True"; */// Veritabanı bağlantı dizesi
-                string connectionString = @"Data Source=BTSTAJER08\MSSQLSERVER01;Initial Catalog=DbRsaMessage;Persist Security Info=True;User ID=vural; Password=vural123"; // Veritabanı bağlantı dizesi
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string query = "INSERT INTO TBLUSERS (Username, PasswordHash) VALUES (@Username, @HashedPassword)";
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@Username", username);
-                        command.Parameters.AddWithValue("@HashedPassword", hashedPassword);
-
-                        command.ExecuteNonQuery();
-                    }
-                }
-            }
-
-            MessageBox.Show("Kayıt Başarılı", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);   
-
-
+            baglanti.Close();
         }
     }
 }
 
 
-           

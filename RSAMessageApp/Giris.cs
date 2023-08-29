@@ -33,8 +33,9 @@ namespace RSAMessageApp
 
             if (AuthenticateUser(TxtUsername.Text, TxtPassword.Text) == true)
             {
-                Form1 fr1 = new Form1();
-                fr1.Show();
+                Mesaj msj = new Mesaj();
+                msj.showUsername = TxtUsername.Text;
+                msj.Show();
                 this.Hide();
             }
 
