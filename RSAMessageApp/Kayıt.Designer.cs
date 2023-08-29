@@ -38,9 +38,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(32, 58);
+            this.label1.Location = new System.Drawing.Point(13, 58);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 24);
+            this.label1.Size = new System.Drawing.Size(160, 29);
             this.label1.TabIndex = 0;
             this.label1.Text = "Kullanıcı Adı:";
             // 
@@ -48,22 +48,22 @@
             // 
             this.TxtUsername.Location = new System.Drawing.Point(179, 52);
             this.TxtUsername.Name = "TxtUsername";
-            this.TxtUsername.Size = new System.Drawing.Size(260, 30);
+            this.TxtUsername.Size = new System.Drawing.Size(260, 35);
             this.TxtUsername.TabIndex = 1;
             // 
             // TxtPassword
             // 
             this.TxtPassword.Location = new System.Drawing.Point(179, 97);
             this.TxtPassword.Name = "TxtPassword";
-            this.TxtPassword.Size = new System.Drawing.Size(260, 30);
+            this.TxtPassword.Size = new System.Drawing.Size(260, 35);
             this.TxtPassword.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(106, 103);
+            this.label2.Location = new System.Drawing.Point(102, 103);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 24);
+            this.label2.Size = new System.Drawing.Size(71, 29);
             this.label2.TabIndex = 2;
             this.label2.Text = "Şifre:";
             // 
@@ -79,7 +79,7 @@
             // 
             // Kayıt
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(194)))), ((int)(((byte)(208)))));
             this.ClientSize = new System.Drawing.Size(518, 254);

@@ -20,7 +20,8 @@ namespace RSAMessageApp
         }
 
         // SQL Server bağlantısı 
-        SqlConnection baglanti = new SqlConnection(@"Data Source=Vural\SQLEXPRESS;Initial Catalog=DbRsaMessage;Integrated Security=True");
+        //SqlConnection baglanti = new SqlConnection(@"Data Source=Vural\SQLEXPRESS;Initial Catalog=DbRsaMessage;Integrated Security=True");
+        SqlConnection baglanti = new SqlConnection(@"Data Source=BTSTAJER08\MSSQLSERVER01;Initial Catalog=DbRsaMessage;Persist Security Info=True;User ID=vural; Password=vural123");
 
 
 
@@ -57,7 +58,8 @@ namespace RSAMessageApp
             //Kullanıcıyı veritabanına kaydetme
             void SaveUserToDatabase(string username, string hashedPassword)
             {
-                string connectionString = @"Data Source=Vural\SQLEXPRESS;Initial Catalog=DbRsaMessage;Integrated Security=True"; // Veritabanı bağlantı dizesi
+                /*string connectionString = @"Data Source=Vural\SQLEXPRESS;Initial Catalog=DbRsaMessage;Integrated Security=True"; */// Veritabanı bağlantı dizesi
+                string connectionString = @"Data Source=BTSTAJER08\MSSQLSERVER01;Initial Catalog=DbRsaMessage;Persist Security Info=True;User ID=vural; Password=vural123"; // Veritabanı bağlantı dizesi
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
