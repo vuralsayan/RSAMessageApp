@@ -16,7 +16,7 @@ namespace RSAMessageApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Kayıt());
+            Application.Run(new Giris());
         }
     }
 }
