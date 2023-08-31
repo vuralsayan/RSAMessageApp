@@ -31,19 +31,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.LblUsername = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.TxtReceiver = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -77,16 +77,6 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Gelen Kutusu";
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.dataGridView2);
-            this.groupBox2.Location = new System.Drawing.Point(636, 64);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(618, 287);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Giden Kutusu";
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -98,6 +88,17 @@
             this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(612, 253);
             this.dataGridView1.TabIndex = 0;
+            //this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.dataGridView2);
+            this.groupBox2.Location = new System.Drawing.Point(636, 64);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(618, 287);
+            this.groupBox2.TabIndex = 3;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Giden Kutusu";
             // 
             // dataGridView2
             // 
@@ -117,7 +118,7 @@
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.richTextBox1);
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.TxtReceiver);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Location = new System.Drawing.Point(12, 347);
             this.groupBox3.Name = "groupBox3";
@@ -126,29 +127,24 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Mesaj Paneli";
             // 
-            // label2
+            // button2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(34, 49);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 29);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Alıcı:";
+            this.button2.Location = new System.Drawing.Point(109, 197);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(240, 58);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Temizle";
+            this.button2.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // button1
             // 
-            this.textBox1.Location = new System.Drawing.Point(109, 43);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(240, 35);
-            this.textBox1.TabIndex = 1;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(491, 34);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(721, 238);
-            this.richTextBox1.TabIndex = 2;
-            this.richTextBox1.Text = "";
+            this.button1.Location = new System.Drawing.Point(109, 124);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(240, 58);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Gönder";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label3
             // 
@@ -159,23 +155,29 @@
             this.label3.TabIndex = 3;
             this.label3.Text = "Mesaj:";
             // 
-            // button1
+            // richTextBox1
             // 
-            this.button1.Location = new System.Drawing.Point(109, 124);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(240, 58);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Gönder";
-            this.button1.UseVisualStyleBackColor = true;
+            this.richTextBox1.Location = new System.Drawing.Point(491, 34);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(721, 238);
+            this.richTextBox1.TabIndex = 2;
+            this.richTextBox1.Text = "";
             // 
-            // button2
+            // TxtReceiver
             // 
-            this.button2.Location = new System.Drawing.Point(109, 197);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(240, 58);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Temizle";
-            this.button2.UseVisualStyleBackColor = true;
+            this.TxtReceiver.Location = new System.Drawing.Point(109, 43);
+            this.TxtReceiver.Name = "TxtReceiver";
+            this.TxtReceiver.Size = new System.Drawing.Size(240, 35);
+            this.TxtReceiver.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(34, 49);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(69, 29);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Alıcı:";
             // 
             // Mesaj
             // 
@@ -195,8 +197,8 @@
             this.Text = "Mesaj";
             this.Load += new System.EventHandler(this.Mesaj_Load);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -215,7 +217,7 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TxtReceiver;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button2;
