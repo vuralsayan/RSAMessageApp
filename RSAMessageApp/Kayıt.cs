@@ -61,6 +61,7 @@ namespace RSAMessageApp
             }
         }
 
+
         void SaveUserToDatabase(string username, string hashedPassword, string publicKey, string privateKey)
         {
             baglanti.Open();
