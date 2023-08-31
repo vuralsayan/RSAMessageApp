@@ -19,9 +19,6 @@ namespace RSAMessageApp
             InitializeComponent();
         }
 
-        SqlConnection baglanti = new SqlConnection(@"Data Source=BTSTAJER08\MSSQLSERVER01;Initial Catalog=DbRsaMessage;Persist Security Info=True;User ID=vural; Password=vural123");
-
-
         private void BtnRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Kayıt kyt = new Kayıt();
@@ -68,13 +65,14 @@ namespace RSAMessageApp
                 }
             }
 
+           
+           
             // Kullanıcının hash'ini veritabanından al
             string GetHashedPasswordByUsername(string username)
             {
                 string hashedPassword = "";
 
-                string connectionString = @"Data Source=BTSTAJER08\MSSQLSERVER01;Initial Catalog=DbRsaMessage;Persist Security Info=True;User ID=vural; Password=vural123"; // Veritabanı bağlantı dizesi
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = Connection.CreateConnection())
                 {
                     connection.Open();
 

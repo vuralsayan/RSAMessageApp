@@ -19,7 +19,6 @@ namespace RSAMessageApp
             InitializeComponent();
         }
 
-        SqlConnection connection = new SqlConnection(@"Data Source=BTSTAJER08\MSSQLSERVER01;Initial Catalog=DbRsaMessage;Persist Security Info=True;User ID=vural; Password=vural123");
         public string showUsername;
 
         private void Mesaj_Load(object sender, EventArgs e)
@@ -31,8 +30,8 @@ namespace RSAMessageApp
         {
             string privateKey = "";
 
-            string connectionString = @"Data Source=BTSTAJER08\MSSQLSERVER01;Initial Catalog=DbRsaMessage;Persist Security Info=True;User ID=vural; Password=vural123"; // Veritabanı bağlantı dizesi
-            using (SqlConnection connection = new SqlConnection(connectionString))
+
+            using (SqlConnection connection = Connection.CreateConnection())
             {
                 connection.Open();
 
@@ -59,8 +58,7 @@ namespace RSAMessageApp
         {
             string publicKey = "";
 
-            string connectionString = @"Data Source=BTSTAJER08\MSSQLSERVER01;Initial Catalog=DbRsaMessage;Persist Security Info=True;User ID=vural; Password=vural123"; // Veritabanı bağlantı dizesi
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = Connection.CreateConnection())
             {
                 connection.Open();
 
@@ -165,8 +163,7 @@ namespace RSAMessageApp
         {
             int userID = -1;
 
-            string connectionString = @"Data Source=BTSTAJER08\MSSQLSERVER01;Initial Catalog=DbRsaMessage;Persist Security Info=True;User ID=vural; Password=vural123"; // Veritabanı bağlantı dizesi
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = Connection.CreateConnection())
             {
                 connection.Open();
                 using (SqlCommand command = new SqlCommand("SELECT UserID FROM TBLUSERS WHERE Username=@Username", connection))
@@ -222,17 +219,18 @@ namespace RSAMessageApp
 
         private void SaveEncryptedMessageToDatabase(int senderID, int receiverID, string encryptedMessage)
         {
-            using (SqlCommand command = new SqlCommand("INSERT INTO TBLMESSAGES (SenderID, ReceiverID, EncryptedMessage) VALUES (@SenderID, @ReceiverID, @EncryptedMessage)", connection))
+            using (SqlConnection connection = Connection.CreateConnection())
             {
-                command.Parameters.AddWithValue("@SenderID", senderID);
-                command.Parameters.AddWithValue("@ReceiverID", receiverID);
-                command.Parameters.AddWithValue("@EncryptedMessage", encryptedMessage);
-                connection.Open();
-                command.ExecuteNonQuery();
+                using (SqlCommand command = new SqlCommand("INSERT INTO TBLMESSAGES (SenderID, ReceiverID, EncryptedMessage) VALUES (@SenderID, @ReceiverID, @EncryptedMessage)", connection))
+                {
+                    command.Parameters.AddWithValue("@SenderID", senderID);
+                    command.Parameters.AddWithValue("@ReceiverID", receiverID);
+                    command.Parameters.AddWithValue("@EncryptedMessage", encryptedMessage);
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
             }
         }
-
-
     }
 }
 
