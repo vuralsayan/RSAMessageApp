@@ -23,7 +23,7 @@ namespace RSAMessageApp
 
         private void Mesaj_Load(object sender, EventArgs e)
         {
-            LblUsername.Text = showUsername;
+            LblUsername.Text = $"Hoşgeldin {showUsername}";
         }
 
         public string GetPrivateKeyByUsername(string username)
