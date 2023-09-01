@@ -21,9 +21,37 @@ namespace RSAMessageApp
 
         public string showUsername;
 
+        void GelenKutusu()
+        {
+            string query = $"SELECT MessageID,TBLUSERS_Sender.Username AS SenderUsername, TBLUSERS_Receiver.Username AS ReceiverUsername, EncryptedMessage, FORMAT(TBLMESSAGES.Timestamp, 'yyyy-MM-dd HH:mm:ss') AS FormattedTimestamp FROM TBLMESSAGES INNER JOIN TBLUSERS AS TBLUSERS_Sender ON TBLMESSAGES.SenderID = TBLUSERS_Sender.UserID INNER JOIN TBLUSERS AS TBLUSERS_Receiver ON TBLMESSAGES.ReceiverID = TBLUSERS_Receiver.UserID WHERE TBLUSERS_Receiver.Username = '{showUsername}'";
+            SqlDataAdapter da = new SqlDataAdapter(query, Connection.CreateConnection());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            dataGridView1.DataSource = dt;
+
+        }
+
+        void GidenKutusu()
+        {
+            string query = $"SELECT MessageID,TBLUSERS_Sender.Username AS SenderUsername, TBLUSERS_Receiver.Username AS ReceiverUsername, EncryptedMessage, FORMAT(TBLMESSAGES.Timestamp, 'yyyy-MM-dd HH:mm:ss') AS FormattedTimestamp FROM TBLMESSAGES INNER JOIN TBLUSERS AS TBLUSERS_Sender ON TBLMESSAGES.SenderID = TBLUSERS_Sender.UserID INNER JOIN TBLUSERS AS TBLUSERS_Receiver ON TBLMESSAGES.ReceiverID = TBLUSERS_Receiver.UserID WHERE TBLUSERS_Sender.Username = '{showUsername}';";
+            SqlDataAdapter da = new SqlDataAdapter(query, Connection.CreateConnection());
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            dataGridView2.DataSource = dt;
+        }
+
+
         private void Mesaj_Load(object sender, EventArgs e)
         {
             LblUsername.Text = showUsername;
+            //GelenKutusu();
+            //GidenKutusu();
+
+            string receiverPrivateKey = GetPrivateKeyByUsername(showUsername);
+            string senderPublicKey = GetPublicKeyByUsername(showUsername);
+
+            LoadDecryptedMessagesToDataGridView(dataGridView1, "Inbox", receiverPrivateKey, senderPublicKey);
+            LoadDecryptedMessagesToDataGridView(dataGridView2, "Outbox", receiverPrivateKey, senderPublicKey);
         }
 
         public string GetPrivateKeyByUsername(string username)
@@ -84,7 +112,7 @@ namespace RSAMessageApp
 
 
         // Gönderenin mesajı şifrelemesi ve imzalaması
-        public string EncryptAndSignMessage(string message, string senderPrivateKey, string receiverPublicKey)
+        public string EncryptAndSignMessage(string message, string senderPrivateKey)
         {
             using (RSACryptoServiceProvider senderRsa = new RSACryptoServiceProvider())
             {
@@ -199,7 +227,7 @@ namespace RSAMessageApp
                 string receiverPrivateKey = GetPrivateKeyByUsername(receiverName);
 
                 // Mesajı şifrele ve imzala
-                string signedMessage = EncryptAndSignMessage(message, senderPrivateKey, receiverPublicKey);
+                string signedMessage = EncryptAndSignMessage(message, senderPrivateKey);
 
                 // Gönderen ve alıcının ID'lerini al
                 int senderID = GetUserIDByUsername(senderName);
@@ -210,11 +238,82 @@ namespace RSAMessageApp
 
                 MessageBox.Show("Mesaj başarıyla gönderildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
+            catch (CryptographicException ex)
             {
                 MessageBox.Show("Hata: " + ex.Message, "Hata Oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
+        public List<string> GetEncryptedMessagesFromDatabase(string boxType)
+        {
+            List<string> encryptedMessages = new List<string>();
+
+            using (SqlConnection connection = Connection.CreateConnection())
+            {
+                connection.Open();
+
+                string query = "";
+                if (boxType == "Inbox") //Gelen Kutusu
+                {
+                    query = "SELECT EncryptedMessage FROM TBLMESSAGES WHERE ReceiverID = @ReceiverID";
+                }
+                else if (boxType == "Outbox")   //Giden kutusu
+                {
+                    query = "SELECT EncryptedMessage FROM TBLMESSAGES WHERE SenderID = @SenderID";
+                }
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    // Alıcı veya gönderici ID'sini parametre olarak ekleyin
+                    if (boxType == "Inbox")
+                    {
+                        command.Parameters.AddWithValue("@ReceiverID", GetUserIDByUsername(showUsername)); // showUsername, mevcut kullanıcının adını içerir
+                    }
+                    else if (boxType == "Outbox")
+                    {
+                        command.Parameters.AddWithValue("@SenderID", GetUserIDByUsername(showUsername)); // showUsername, mevcut kullanıcının adını içerir
+                    }
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            string encryptedMessage = dr["EncryptedMessage"].ToString();
+                            encryptedMessages.Add(encryptedMessage);
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return encryptedMessages;
+        }
+
+
+
+
+        private void LoadDecryptedMessagesToDataGridView(DataGridView dataGridView, string boxType, string receiverPrivateKey, string senderPublicKey)
+        {
+            // Şifreli mesajları alın ve çözün, her mesajı bir koleksiyon içinde saklayın
+            List<string> encryptedMessages = GetEncryptedMessagesFromDatabase(boxType);
+            List<string> decryptedMessages = new List<string>();
+
+            foreach (string encryptedMessage in encryptedMessages)
+            {
+                string decryptedMessage = DecryptAndVerifyMessage(encryptedMessage, receiverPrivateKey, senderPublicKey);
+                decryptedMessages.Add(decryptedMessage);
+            }
+
+            // DataGridView için bir BindingSource oluşturun ve verileri yükleyin
+            BindingSource bindingSource = new BindingSource();
+            bindingSource.DataSource = decryptedMessages;
+
+            // DataGridView'ı ayarlayın
+            dataGridView.DataSource = bindingSource;
+        }
+
 
 
         private void SaveEncryptedMessageToDatabase(int senderID, int receiverID, string encryptedMessage)
@@ -231,6 +330,9 @@ namespace RSAMessageApp
                 }
             }
         }
+
+
     }
 }
+
 
