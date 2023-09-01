@@ -221,10 +221,11 @@ namespace RSAMessageApp
         {
             using (SqlConnection connection = Connection.CreateConnection())
             {
-                using (SqlCommand command = new SqlCommand("INSERT INTO TBLMESSAGES (SenderID, ReceiverID, EncryptedMessage) VALUES (@SenderID, @ReceiverID, @EncryptedMessage)", connection))
+                using (SqlCommand command = new SqlCommand("INSERT INTO TBLMESSAGES (SenderID, ReceiverID, Title, EncryptedMessage) VALUES (@SenderID, @ReceiverID, @Title, @EncryptedMessage)", connection))
                 {
                     command.Parameters.AddWithValue("@SenderID", senderID);
                     command.Parameters.AddWithValue("@ReceiverID", receiverID);
+                    command.Parameters.AddWithValue("@Title", TxtTitle.Text);
                     command.Parameters.AddWithValue("@EncryptedMessage", encryptedMessage);
                     connection.Open();
                     command.ExecuteNonQuery();
