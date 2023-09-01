@@ -32,14 +32,14 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.TxtTitle = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.BtnClear = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.TxtReceiver = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.TxtTitle = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -81,7 +81,7 @@
             // 
             this.groupBox3.Controls.Add(this.TxtTitle);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.button2);
+            this.groupBox3.Controls.Add(this.BtnClear);
             this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.richTextBox1);
@@ -94,18 +94,35 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Mesaj Paneli";
             // 
-            // button2
+            // TxtTitle
             // 
-            this.button2.Location = new System.Drawing.Point(6, 159);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(172, 49);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Temizle";
-            this.button2.UseVisualStyleBackColor = true;
+            this.TxtTitle.Location = new System.Drawing.Point(83, 88);
+            this.TxtTitle.Name = "TxtTitle";
+            this.TxtTitle.Size = new System.Drawing.Size(282, 30);
+            this.TxtTitle.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 94);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(71, 24);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "Başlık:";
+            // 
+            // BtnClear
+            // 
+            this.BtnClear.Location = new System.Drawing.Point(10, 223);
+            this.BtnClear.Name = "BtnClear";
+            this.BtnClear.Size = new System.Drawing.Size(181, 49);
+            this.BtnClear.TabIndex = 5;
+            this.BtnClear.Text = "Temizle";
+            this.BtnClear.UseVisualStyleBackColor = true;
+            this.BtnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(184, 159);
+            this.button1.Location = new System.Drawing.Point(10, 168);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(181, 49);
             this.button1.TabIndex = 4;
@@ -146,22 +163,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Alıcı:";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 94);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(71, 24);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "Başlık:";
-            // 
-            // TxtTitle
-            // 
-            this.TxtTitle.Location = new System.Drawing.Point(83, 88);
-            this.TxtTitle.Name = "TxtTitle";
-            this.TxtTitle.Size = new System.Drawing.Size(282, 30);
-            this.TxtTitle.TabIndex = 7;
-            // 
             // Mesaj
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -195,7 +196,7 @@
         private System.Windows.Forms.TextBox TxtReceiver;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button BtnClear;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox TxtTitle;
         private System.Windows.Forms.Label label4;

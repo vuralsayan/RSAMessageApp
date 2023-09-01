@@ -24,6 +24,13 @@ namespace RSAMessageApp
         private void Mesaj_Load(object sender, EventArgs e)
         {
             LblUsername.Text = $"Hoşgeldin {showUsername}";
+            ShowMessages();
+        }
+
+        void ShowMessages()
+        {
+            DataTable dt = GetMessagesFromDatabase(GetUserIDByUsername(showUsername));
+            dataGridView1.DataSource = dt;
         }
 
         public string GetPrivateKeyByUsername(string username)
@@ -81,7 +88,26 @@ namespace RSAMessageApp
             return publicKey;
         }
 
+        //Veritabanından mesaj başlıklarını çekme
+        private DataTable GetMessagesFromDatabase(int userID)
+        {
+            string query = "SELECT " +
+                "MessageID AS 'ID', " +
+                "TBLUSERS_Sender.Username AS 'Gönderen', " +
+                "TBLUSERS_Receiver.Username AS 'Alıcı'," +
+                "Title AS 'Başlık'," +
+                "FORMAT(TBLMESSAGES.Timestamp, 'dd-MM-yyyy HH:mm:ss') AS 'Tarih' " +
+                "FROM TBLMESSAGES " +
+                "INNER JOIN TBLUSERS AS TBLUSERS_Sender ON TBLMESSAGES.SenderID = TBLUSERS_Sender.UserID " +
+                "INNER JOIN TBLUSERS AS TBLUSERS_Receiver ON TBLMESSAGES.ReceiverID = TBLUSERS_Receiver.UserID " +
+                "WHERE TBLUSERS_Receiver.UserID = @UserID";
 
+            SqlDataAdapter da = new SqlDataAdapter(query, Connection.CreateConnection());
+            da.SelectCommand.Parameters.AddWithValue("@UserID", userID);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
 
         // Gönderenin mesajı şifrelemesi ve imzalaması
         public string EncryptAndSignMessage(string message, string senderPrivateKey, string receiverPublicKey)
@@ -186,36 +212,30 @@ namespace RSAMessageApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                string senderName = LblUsername.Text;
-                string receiverName = TxtReceiver.Text;
-                string message = richTextBox1.Text;
 
-                // Gönderen ve alıcının keyleri alma
-                string senderPrivateKey = GetPrivateKeyByUsername(senderName);
-                string senderPublicKey = GetPublicKeyByUsername(senderName);
-                string receiverPublicKey = GetPublicKeyByUsername(receiverName);
-                string receiverPrivateKey = GetPrivateKeyByUsername(receiverName);
+            string senderName = showUsername;
+            string receiverName = TxtReceiver.Text;
+            string message = richTextBox1.Text;
 
-                // Mesajı şifrele ve imzala
-                string signedMessage = EncryptAndSignMessage(message, senderPrivateKey, receiverPublicKey);
+            // Gönderen ve alıcının keyleri alma
+            string senderPrivateKey = GetPrivateKeyByUsername(senderName);
+            string senderPublicKey = GetPublicKeyByUsername(senderName);
+            string receiverPublicKey = GetPublicKeyByUsername(receiverName);
+            string receiverPrivateKey = GetPrivateKeyByUsername(receiverName);
 
-                // Gönderen ve alıcının ID'lerini al
-                int senderID = GetUserIDByUsername(senderName);
-                int receiverID = GetUserIDByUsername(receiverName);
+            // Mesajı şifrele ve imzala
+            string signedMessage = EncryptAndSignMessage(message, senderPrivateKey, receiverPublicKey);
 
-                // Şifrelenmiş ve imzalanmış mesajı veritabanına kaydet
-                SaveEncryptedMessageToDatabase(senderID, receiverID, signedMessage);
+            // Gönderen ve alıcının ID'lerini al
+            int senderID = GetUserIDByUsername(senderName);
+            int receiverID = GetUserIDByUsername(receiverName);
 
-                MessageBox.Show("Mesaj başarıyla gönderildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Hata: " + ex.Message, "Hata Oluştu", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // Şifrelenmiş ve imzalanmış mesajı veritabanına kaydet
+            SaveEncryptedMessageToDatabase(senderID, receiverID, signedMessage);
+
+            MessageBox.Show("Mesaj başarıyla gönderildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ShowMessages();
         }
-
 
         private void SaveEncryptedMessageToDatabase(int senderID, int receiverID, string encryptedMessage)
         {
@@ -231,6 +251,14 @@ namespace RSAMessageApp
                     command.ExecuteNonQuery();
                 }
             }
+        }
+
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            TxtReceiver.Clear();
+            TxtTitle.Clear();
+            richTextBox1.Clear();
+            TxtReceiver.Focus();
         }
     }
 }
