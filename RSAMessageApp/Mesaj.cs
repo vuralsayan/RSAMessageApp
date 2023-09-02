@@ -184,7 +184,6 @@ namespace RSAMessageApp
             }
         }
 
-
         public int GetUserIDByUsername(string username)
         {
             int userID = -1;
@@ -310,10 +309,11 @@ namespace RSAMessageApp
                 if (messageID != -1)
                 {
                     string encryptedMessage = GetEncryptedMessageByMessageID(messageID);
-
+                    var keys = GetSenderAndReceiverKeysByMessageID(messageID);
+                    
                     if (!string.IsNullOrEmpty(encryptedMessage))
                     {
-                        MessageBox.Show(encryptedMessage);
+                        ProcessKeys(encryptedMessage, keys.Item1, keys.Item2);
                     }
                     else
                     {
@@ -327,6 +327,80 @@ namespace RSAMessageApp
             }
 
         }
+
+        public Tuple<string, string> GetSenderAndReceiverKeysByMessageID(int messageID)
+        {
+            string senderPublicKey = "";
+            string receiverPrivateKey = "";
+
+            // Öncelikle, messageID ile ilişkili SenderID ve ReceiverID'yi alın
+            int senderID = -1;
+            int receiverID = -1;
+
+            using (SqlConnection connection = Connection.CreateConnection())
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("SELECT SenderID, ReceiverID FROM TBLMESSAGES WHERE MessageID = @MessageID", connection))
+                {
+                    command.Parameters.AddWithValue("@MessageID", messageID);
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            senderID = Convert.ToInt32(dr["SenderID"]);
+                            receiverID = Convert.ToInt32(dr["ReceiverID"]);
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            // Ardından, SenderID ve ReceiverID ile ilgili kullanıcıların public ve private anahtarlarını alın
+            using (SqlConnection connection = Connection.CreateConnection())
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("SELECT PublicKey, PrivateKey FROM TBLUSERS WHERE UserID = @UserID", connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", senderID);
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            senderPublicKey = dr["PublicKey"].ToString();
+                        }
+                    }
+
+                    // Alıcının private anahtarını almak için aynı işlemi tekrarlayın
+                    command.Parameters.Clear();
+                    command.Parameters.AddWithValue("@UserID", receiverID);
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            receiverPrivateKey = dr["PrivateKey"].ToString();
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            // Tuple kullanarak bu iki anahtarı döndürün
+            return Tuple.Create(senderPublicKey, receiverPrivateKey);
+        }
+
+        private void ProcessKeys(string selectedEncryptedMessage, string senderPublicKey, string receiverPrivateKey)
+        {
+           
+        }
+
+
     }
 }
 
