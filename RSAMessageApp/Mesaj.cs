@@ -92,7 +92,7 @@ namespace RSAMessageApp
         private DataTable GetMessagesFromDatabase(int userID)
         {
             string query = "SELECT " +
-                "MessageID AS 'ID', " +
+                "MessageID AS 'MessageID', " +
                 "TBLUSERS_Sender.Username AS 'Gönderen', " +
                 "TBLUSERS_Receiver.Username AS 'Alıcı'," +
                 "Title AS 'Başlık'," +
@@ -259,6 +259,73 @@ namespace RSAMessageApp
             TxtTitle.Clear();
             richTextBox1.Clear();
             TxtReceiver.Focus();
+        }
+
+        private int GetMessageIDFromSelectedRow(DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
+                int messageID = Convert.ToInt32(selectedRow.Cells["MessageID"].Value);
+                return messageID;
+            }
+            return -1; 
+        }
+
+        private string GetEncryptedMessageByMessageID(int messageID)
+        {
+            string encryptedMessage = null;
+
+            using (SqlConnection connection = Connection.CreateConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT EncryptedMessage FROM TBLMESSAGES WHERE MessageID = @MessageID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@MessageID", messageID);
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            encryptedMessage = dr["EncryptedMessage"].ToString();
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return encryptedMessage;
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int messageID = GetMessageIDFromSelectedRow(e);
+
+                if (messageID != -1)
+                {
+                    string encryptedMessage = GetEncryptedMessageByMessageID(messageID);
+
+                    if (!string.IsNullOrEmpty(encryptedMessage))
+                    {
+                        MessageBox.Show(encryptedMessage);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mesaj bulunamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("MessageID alınamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
         }
     }
 }
