@@ -109,6 +109,7 @@ namespace RSAMessageApp
             return dt;
         }
 
+        /*
         // Gönderenin mesajı şifrelemesi ve imzalaması
         public string EncryptAndSignMessage(string message, string senderPrivateKey, string receiverPublicKey)
         {
@@ -132,57 +133,62 @@ namespace RSAMessageApp
             }
         }
 
+        */
 
-        //Alıcının mesajı çözüp doğrulaması
-        public string DecryptAndVerifyMessage(string signedMessage, string receiverPrivateKey, string senderPublicKey)
+        public string EncryptAndSignMessage(string message, string receiverPublicKey, string senderPrivateKey)
+        {
+            using (RSACryptoServiceProvider receiverRsa = new RSACryptoServiceProvider())
+            { 
+                receiverRsa.FromXmlString(receiverPublicKey);
+
+                // Mesajı alıcının public anahtarıyla şifrele
+                byte[] encryptedBytes = receiverRsa.Encrypt(Encoding.UTF8.GetBytes(message), false);
+
+                // Şifrelenmiş mesajı base64 formatında kodla
+                string encryptedMessage = Convert.ToBase64String(encryptedBytes);
+
+                return encryptedMessage;
+            }
+        }
+
+
+        // Alıcının mesajı çözmesi
+        //string decryptMessage = DecryptMessage(selectedEncryptedMessage, receiverPrivateKey, senderPublicKey, receiverPublicKey);
+        private string DecryptMessage(string encryptedMessage, string receiverPrivateKey, string senderPublicKey, string receiverPublicKey)
         {
             using (RSACryptoServiceProvider receiverRsa = new RSACryptoServiceProvider())
             {
                 receiverRsa.FromXmlString(receiverPrivateKey);
 
-                // İmzalı mesajı ayır
-                string[] parts = signedMessage.Split('|');
-                string encryptedMessage = parts[0];
-                string receivedSenderPublicKey = parts[1];
-
-                // Alıcının kendi private keyi ile mesajı çöz
+                // Şifrelenmiş mesajı çöz
                 byte[] encryptedBytes = Convert.FromBase64String(encryptedMessage);
-                byte[] decryptedBytes = receiverRsa.Decrypt(encryptedBytes, true);
+                byte[] decryptedBytes = receiverRsa.Decrypt(encryptedBytes, false); // Şifrelenmiş mesajı çözerken 'false' kullanıyoruz
 
                 // Mesajı döndür
                 string decryptedMessage = Encoding.UTF8.GetString(decryptedBytes);
 
-                // Gönderenin public keyi ile imzayı doğrula
-                bool isSignatureValid = VerifySignature(decryptedMessage, receivedSenderPublicKey, senderPublicKey);
+                //bool isVerifySignature = VerifySignature(encryptedMessage, receiverPrivateKey, senderPublicKey);
 
-                if (isSignatureValid)
-                {
-                    return decryptedMessage;
-                }
-                else
-                {
-                    throw new Exception("İmza doğrulama hatası: Gönderen kimliği doğrulanamadı.");
-                }
+                return decryptedMessage;
             }
         }
-
 
         //İmzanın doğrulanması
-        public bool VerifySignature(string message, string receivedSenderPublicKey, string originalSenderPublicKey)
-        {
-            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
-            {
-                rsa.FromXmlString(receivedSenderPublicKey);
 
-                // Orjinal gönderenin public keyini base64'den byte dizisine dönüştür
-                byte[] originalPublicKeyBytes = Convert.FromBase64String(originalSenderPublicKey);
+        //public bool VerifySignature(string message, string receivedSenderPublicKey, string originalSenderPublicKey)
+        //{
+        //    using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+        //    using (RSACryptoServiceProvider senderRsa = new RSACryptoServiceProvider())
+        //    {
+        //        rsa.FromXmlString(receivedSenderPublicKey);
+        //        senderRsa.FromXmlString(originalSenderPublicKey);
 
-                // Veriyi SHA-256 ile imzala ve imzayı doğrula
-                bool result = rsa.VerifyData(Encoding.UTF8.GetBytes(message), new SHA256CryptoServiceProvider(), originalPublicKeyBytes);
+        //        // Veriyi SHA-256 ile imzala ve imzayı doğrula
+        //        bool result = rsa.VerifyData(Encoding.UTF8.GetBytes(message), new SHA256CryptoServiceProvider(), senderRsa.ExportParameters(false).Modulus);
 
-                return result;
-            }
-        }
+        //        return result;
+        //    }
+        //}
 
         public int GetUserIDByUsername(string username)
         {
@@ -223,7 +229,7 @@ namespace RSAMessageApp
             string receiverPrivateKey = GetPrivateKeyByUsername(receiverName);
 
             // Mesajı şifrele ve imzala
-            string signedMessage = EncryptAndSignMessage(message, senderPrivateKey, receiverPublicKey);
+            string signedMessage = EncryptAndSignMessage(message, receiverPublicKey, senderPrivateKey);
 
             // Gönderen ve alıcının ID'lerini al
             int senderID = GetUserIDByUsername(senderName);
@@ -268,7 +274,7 @@ namespace RSAMessageApp
                 int messageID = Convert.ToInt32(selectedRow.Cells["MessageID"].Value);
                 return messageID;
             }
-            return -1; 
+            return -1;
         }
 
         private string GetEncryptedMessageByMessageID(int messageID)
@@ -310,10 +316,10 @@ namespace RSAMessageApp
                 {
                     string encryptedMessage = GetEncryptedMessageByMessageID(messageID);
                     var keys = GetSenderAndReceiverKeysByMessageID(messageID);
-                    
+
                     if (!string.IsNullOrEmpty(encryptedMessage))
                     {
-                        ProcessKeys(encryptedMessage, keys.Item1, keys.Item2);
+                        ProcessKeys(encryptedMessage, keys.Item1, keys.Item2, keys.Item3);
                     }
                     else
                     {
@@ -328,9 +334,10 @@ namespace RSAMessageApp
 
         }
 
-        public Tuple<string, string> GetSenderAndReceiverKeysByMessageID(int messageID)
+        public Tuple<string, string, string> GetSenderAndReceiverKeysByMessageID(int messageID)
         {
             string senderPublicKey = "";
+            string receiverPublicKey = "";
             string receiverPrivateKey = "";
 
             // Öncelikle, messageID ile ilişkili SenderID ve ReceiverID'yi alın
@@ -358,12 +365,12 @@ namespace RSAMessageApp
                 connection.Close();
             }
 
-            // Ardından, SenderID ve ReceiverID ile ilgili kullanıcıların public ve private anahtarlarını alın
+            // Ardından, SenderID ile ilgili kullanıcının public anahtarını alın
             using (SqlConnection connection = Connection.CreateConnection())
             {
                 connection.Open();
 
-                using (SqlCommand command = new SqlCommand("SELECT PublicKey, PrivateKey FROM TBLUSERS WHERE UserID = @UserID", connection))
+                using (SqlCommand command = new SqlCommand("SELECT PublicKey FROM TBLUSERS WHERE UserID = @UserID", connection))
                 {
                     command.Parameters.AddWithValue("@UserID", senderID);
 
@@ -374,15 +381,25 @@ namespace RSAMessageApp
                             senderPublicKey = dr["PublicKey"].ToString();
                         }
                     }
+                }
 
-                    // Alıcının private anahtarını almak için aynı işlemi tekrarlayın
-                    command.Parameters.Clear();
+                connection.Close();
+            }
+
+            // Alıcının private ve public anahtarlarını almak için aynı işlemi tekrarlayın
+            using (SqlConnection connection = Connection.CreateConnection())
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("SELECT PublicKey, PrivateKey FROM TBLUSERS WHERE UserID = @UserID", connection))
+                {
                     command.Parameters.AddWithValue("@UserID", receiverID);
 
                     using (SqlDataReader dr = command.ExecuteReader())
                     {
                         if (dr.Read())
                         {
+                            receiverPublicKey = dr["PublicKey"].ToString();
                             receiverPrivateKey = dr["PrivateKey"].ToString();
                         }
                     }
@@ -391,13 +408,14 @@ namespace RSAMessageApp
                 connection.Close();
             }
 
-            // Tuple kullanarak bu iki anahtarı döndürün
-            return Tuple.Create(senderPublicKey, receiverPrivateKey);
+            // Tuple kullanarak bu üç anahtarı döndürün
+            return Tuple.Create(senderPublicKey, receiverPrivateKey, receiverPublicKey);
         }
 
-        private void ProcessKeys(string selectedEncryptedMessage, string senderPublicKey, string receiverPrivateKey)
+        private void ProcessKeys(string selectedEncryptedMessage, string senderPublicKey, string receiverPrivateKey, string receiverPublicKey)
         {
-           
+            string decryptMessage = DecryptMessage(selectedEncryptedMessage, receiverPrivateKey, senderPublicKey, receiverPublicKey);
+            MessageBox.Show(decryptMessage);
         }
 
 
