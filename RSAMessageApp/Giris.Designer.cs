@@ -41,7 +41,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(29, 59);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(160, 29);
+            this.label1.Size = new System.Drawing.Size(132, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "Kullanıcı Adı:";
             // 
@@ -49,7 +49,7 @@
             // 
             this.TxtUsername.Location = new System.Drawing.Point(201, 53);
             this.TxtUsername.Name = "TxtUsername";
-            this.TxtUsername.Size = new System.Drawing.Size(235, 35);
+            this.TxtUsername.Size = new System.Drawing.Size(235, 30);
             this.TxtUsername.TabIndex = 1;
             // 
             // label2
@@ -57,7 +57,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(118, 101);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 29);
+            this.label2.Size = new System.Drawing.Size(58, 24);
             this.label2.TabIndex = 2;
             this.label2.Text = "Şifre:";
             // 
@@ -65,7 +65,7 @@
             // 
             this.TxtPassword.Location = new System.Drawing.Point(201, 95);
             this.TxtPassword.Name = "TxtPassword";
-            this.TxtPassword.Size = new System.Drawing.Size(235, 35);
+            this.TxtPassword.Size = new System.Drawing.Size(235, 30);
             this.TxtPassword.TabIndex = 3;
             // 
             // BtnLogin
@@ -83,7 +83,7 @@
             this.BtnRegister.AutoSize = true;
             this.BtnRegister.Location = new System.Drawing.Point(328, 200);
             this.BtnRegister.Name = "BtnRegister";
-            this.BtnRegister.Size = new System.Drawing.Size(108, 29);
+            this.BtnRegister.Size = new System.Drawing.Size(90, 24);
             this.BtnRegister.TabIndex = 5;
             this.BtnRegister.TabStop = true;
             this.BtnRegister.Text = "Kayıt Ol!";
@@ -91,7 +91,8 @@
             // 
             // Giris
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
+            this.AcceptButton = this.BtnLogin;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(187)))), ((int)(((byte)(228)))), ((int)(((byte)(233)))));
             this.ClientSize = new System.Drawing.Size(540, 270);

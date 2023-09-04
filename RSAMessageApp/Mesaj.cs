@@ -109,32 +109,6 @@ namespace RSAMessageApp
             return dt;
         }
 
-        /*
-        // Gönderenin mesajı şifrelemesi ve imzalaması
-        public string EncryptAndSignMessage(string message, string senderPrivateKey, string receiverPublicKey)
-        {
-            using (RSACryptoServiceProvider senderRsa = new RSACryptoServiceProvider())
-            {
-                senderRsa.FromXmlString(senderPrivateKey);
-
-                // Mesajı şifrele
-                byte[] encryptedBytes = senderRsa.Encrypt(Encoding.UTF8.GetBytes(message), true);
-
-                // Şifrelenmiş mesajı base64 formatında kodla
-                string encryptedMessage = Convert.ToBase64String(encryptedBytes);
-
-                // Gönderenin public keyini al
-                string senderPublicKey = senderRsa.ToXmlString(false);
-
-                // Mesajı ve gönderenin public keyini birleştir
-                string signedMessage = $"{encryptedMessage}|{senderPublicKey}";
-
-                return signedMessage;
-            }
-        }
-
-        */
-
         public string EncryptAndSignMessage(string message, string receiverPublicKey, string senderPrivateKey)
         {
             using (RSACryptoServiceProvider receiverRsa = new RSACryptoServiceProvider())
@@ -150,7 +124,6 @@ namespace RSAMessageApp
                 return encryptedMessage;
             }
         }
-
 
         // Alıcının mesajı çözmesi
         //string decryptMessage = DecryptMessage(selectedEncryptedMessage, receiverPrivateKey, senderPublicKey, receiverPublicKey);
