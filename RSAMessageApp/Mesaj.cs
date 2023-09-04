@@ -112,7 +112,7 @@ namespace RSAMessageApp
         public string EncryptAndSignMessage(string message, string receiverPublicKey, string senderPrivateKey)
         {
             using (RSACryptoServiceProvider receiverRsa = new RSACryptoServiceProvider())
-            { 
+            {
                 receiverRsa.FromXmlString(receiverPublicKey);
 
                 // Mesajı alıcının public anahtarıyla şifrele
@@ -289,10 +289,16 @@ namespace RSAMessageApp
                 {
                     string encryptedMessage = GetEncryptedMessageByMessageID(messageID);
                     var keys = GetSenderAndReceiverKeysByMessageID(messageID);
+                    var info = GetSenderNameAndDateByMessageID(messageID);
 
                     if (!string.IsNullOrEmpty(encryptedMessage))
                     {
-                        ProcessKeys(encryptedMessage, keys.Item1, keys.Item2, keys.Item3);
+                        string encryptedMessageShow = ProcessKeys(encryptedMessage, keys.Item1, keys.Item2, keys.Item3);
+                        MesajDetay msjDetay = new MesajDetay();
+                        msjDetay.message = encryptedMessageShow;
+                        msjDetay.senderName = info.Item1;
+                        msjDetay.date = info.Item2;
+                        msjDetay.Show();
                     }
                     else
                     {
@@ -385,12 +391,63 @@ namespace RSAMessageApp
             return Tuple.Create(senderPublicKey, receiverPrivateKey, receiverPublicKey);
         }
 
-        private void ProcessKeys(string selectedEncryptedMessage, string senderPublicKey, string receiverPrivateKey, string receiverPublicKey)
+        public string ProcessKeys(string selectedEncryptedMessage, string senderPublicKey, string receiverPrivateKey, string receiverPublicKey)
         {
             string decryptMessage = DecryptMessage(selectedEncryptedMessage, receiverPrivateKey, senderPublicKey, receiverPublicKey);
-            MessageBox.Show(decryptMessage);
+            return decryptMessage;
         }
 
+        // MesajDetay formuna gönderilecek olan mesajı kimin gönderdiğini ve mesajın tarihini döndürür
+        public Tuple<string, string> GetSenderNameAndDateByMessageID(int messageID)
+        {
+            string senderName = "";
+            string date = "";
+
+            using (SqlConnection connection = Connection.CreateConnection())
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("SELECT SenderID, Timestamp FROM TBLMESSAGES WHERE MessageID = @MessageID", connection))
+                {
+                    command.Parameters.AddWithValue("@MessageID", messageID);
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            int senderID = Convert.ToInt32(dr["SenderID"]);
+                            date = dr["Timestamp"].ToString();
+
+                            using (SqlConnection connection2 = Connection.CreateConnection())
+                            {
+                                connection2.Open();
+
+                                using (SqlCommand command2 = new SqlCommand("SELECT Username FROM TBLUSERS WHERE UserID = @UserID", connection2))
+                                {
+                                    command2.Parameters.AddWithValue("@UserID", senderID);
+
+                                    using (SqlDataReader dr2 = command2.ExecuteReader())
+                                    {
+                                        if (dr2.Read())
+                                        {
+                                            senderName = dr2["Username"].ToString();
+                                        }
+                                    }
+                                }
+
+                                connection2.Close();
+                            }
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return Tuple.Create(senderName, date);
+        }
+        
+        
 
     }
 }
