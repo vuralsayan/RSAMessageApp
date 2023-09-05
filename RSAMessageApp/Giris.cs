@@ -93,10 +93,6 @@ namespace RSAMessageApp
                 return hashedPassword;
             }
         }
-
-        private void Giris_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
-        }
+        
     }
 }

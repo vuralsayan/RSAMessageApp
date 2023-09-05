@@ -109,7 +109,7 @@
             this.Name = "Giris";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Giris";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Giris_FormClosed);
+            //this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Giris_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

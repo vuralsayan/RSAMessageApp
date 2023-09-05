@@ -74,14 +74,26 @@ namespace RSAMessageApp
         private void BtnAnswer_Click(object sender, EventArgs e)
         {
             string messageSenderName = senderName;
-            Mesaj msj = new Mesaj();
-            msj.TxtReceiverText = messageSenderName;
-            msj.showUsername = showUsername; // Değeri aktar
-            msj.Show();
+
+            // Öncelikle açık olan Mesaj formunu bulun
+            Mesaj existingMesaj = Application.OpenForms.OfType<Mesaj>().FirstOrDefault();
+
+            if (existingMesaj != null)
+            {
+                existingMesaj.TxtReceiverText = messageSenderName; // Kullanıcı adını güncelleyin
+                existingMesaj.Show(); // Mevcut Mesaj formunu gösterin
+            }
+            else
+            {
+                // Mesaj formu açık değilse, yeni bir tane oluşturun
+                Mesaj msj = new Mesaj();
+                msj.showUsername = messageSenderName;
+                msj.Show();
+            }
+
             this.Close();
-
-
-
         }
+
+
     }
 }

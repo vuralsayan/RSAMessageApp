@@ -120,6 +120,7 @@
             this.Name = "MesajDetay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MesajDetay";
+            //this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MesajDetay_FormClosed);
             this.Load += new System.EventHandler(this.MesajDetay_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
