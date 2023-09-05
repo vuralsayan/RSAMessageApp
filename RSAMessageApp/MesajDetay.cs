@@ -17,17 +17,57 @@ namespace RSAMessageApp
         public MesajDetay()
         {
             InitializeComponent();
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowOnly;
         }
+
+        public Mesaj MesajFormReference { get; set; }
 
         public string message;
         public string senderName;
         public string date;
+        public int messageID;
 
         private void MesajDetay_Load(object sender, EventArgs e)
         {
-            LblMesaj.Text = message;
-            LblSender.Text = senderName;
-            LblDate.Text = date;
+            textBox1.Text = senderName;
+            textBox2.Text = date;
+            richTextBox1.Text = message;
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            int messageIDToDelete = messageID;
+
+            string deleteQuery = "DELETE FROM TBLMESSAGES WHERE MessageID = @MessageID";
+
+            using (SqlConnection connection = Connection.CreateConnection())
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(deleteQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@MessageID", messageIDToDelete);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Mesaj veritabanından başarıyla silindi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mesaj silinirken bir hata oluştu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    if (MesajFormReference != null)
+                    {
+                        MesajFormReference.ShowMessages();
+                    }
+                }
+            }
         }
     }
 }

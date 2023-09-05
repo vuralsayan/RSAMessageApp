@@ -28,49 +28,92 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.LblMesaj = new System.Windows.Forms.Label();
-            this.LblSender = new System.Windows.Forms.Label();
-            this.LblDate = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.BtnDelete = new System.Windows.Forms.Button();
+            this.BtnAnswer = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // LblMesaj
+            // label1
             // 
-            this.LblMesaj.AutoSize = true;
-            this.LblMesaj.Location = new System.Drawing.Point(69, 45);
-            this.LblMesaj.Name = "LblMesaj";
-            this.LblMesaj.Size = new System.Drawing.Size(62, 24);
-            this.LblMesaj.TabIndex = 0;
-            this.LblMesaj.Text = "label1";
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(6, 27);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(146, 29);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Gönderen:";
             // 
-            // LblSender
+            // label2
             // 
-            this.LblSender.AutoSize = true;
-            this.LblSender.Location = new System.Drawing.Point(69, 106);
-            this.LblSender.Name = "LblSender";
-            this.LblSender.Size = new System.Drawing.Size(62, 24);
-            this.LblSender.TabIndex = 1;
-            this.LblSender.Text = "label1";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.Location = new System.Drawing.Point(64, 85);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 29);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Tarih:";
             // 
-            // LblDate
+            // richTextBox1
             // 
-            this.LblDate.AutoSize = true;
-            this.LblDate.Location = new System.Drawing.Point(69, 159);
-            this.LblDate.Name = "LblDate";
-            this.LblDate.Size = new System.Drawing.Size(62, 24);
-            this.LblDate.TabIndex = 2;
-            this.LblDate.Text = "label1";
+            this.richTextBox1.Location = new System.Drawing.Point(449, 21);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(641, 205);
+            this.richTextBox1.TabIndex = 5;
+            this.richTextBox1.Text = "";
+            // 
+            // BtnDelete
+            // 
+            this.BtnDelete.Location = new System.Drawing.Point(21, 178);
+            this.BtnDelete.Name = "BtnDelete";
+            this.BtnDelete.Size = new System.Drawing.Size(194, 48);
+            this.BtnDelete.TabIndex = 6;
+            this.BtnDelete.Text = "Sil";
+            this.BtnDelete.UseVisualStyleBackColor = true;
+            this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
+            // 
+            // BtnAnswer
+            // 
+            this.BtnAnswer.Location = new System.Drawing.Point(221, 178);
+            this.BtnAnswer.Name = "BtnAnswer";
+            this.BtnAnswer.Size = new System.Drawing.Size(194, 48);
+            this.BtnAnswer.TabIndex = 7;
+            this.BtnAnswer.Text = "Cevapla";
+            this.BtnAnswer.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(158, 21);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(257, 35);
+            this.textBox1.TabIndex = 8;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(158, 79);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(257, 35);
+            this.textBox2.TabIndex = 9;
             // 
             // MesajDetay
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(194)))), ((int)(((byte)(208)))));
-            this.ClientSize = new System.Drawing.Size(914, 477);
-            this.Controls.Add(this.LblDate);
-            this.Controls.Add(this.LblSender);
-            this.Controls.Add(this.LblMesaj);
+            this.ClientSize = new System.Drawing.Size(1102, 247);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.BtnAnswer);
+            this.Controls.Add(this.BtnDelete);
+            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MesajDetay";
@@ -83,9 +126,12 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label LblMesaj;
-        private System.Windows.Forms.Label LblSender;
-        private System.Windows.Forms.Label LblDate;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button BtnDelete;
+        private System.Windows.Forms.Button BtnAnswer;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }

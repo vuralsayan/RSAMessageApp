@@ -17,6 +17,8 @@ namespace RSAMessageApp
         public Mesaj()
         {
             InitializeComponent();
+            this.AutoSize = true;
+            this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
         public string showUsername;
@@ -27,10 +29,15 @@ namespace RSAMessageApp
             ShowMessages();
         }
 
-        void ShowMessages()
+        public void ShowMessages()
         {
             DataTable dt = GetMessagesFromDatabase(GetUserIDByUsername(showUsername));
             dataGridView1.DataSource = dt;
+            dataGridView1.Columns["ID"].Width = 70; // "ID" sütununu 50 piksel genişliğinde ayarla
+            dataGridView1.Columns["Gönderen"].Width = 130; // "ID" sütununu 50 piksel genişliğinde ayarla
+            dataGridView1.Columns["Alıcı"].Width = 130; // "ID" sütununu 50 piksel genişliğinde ayarla
+            dataGridView1.Columns["Başlık"].Width = 200; // "ID" sütununu 50 piksel genişliğinde ayarla
+            dataGridView1.Columns["Tarih"].Width = 170; // "ID" sütununu 50 piksel genişliğinde ayarla
         }
 
         public string GetPrivateKeyByUsername(string username)
@@ -92,7 +99,7 @@ namespace RSAMessageApp
         private DataTable GetMessagesFromDatabase(int userID)
         {
             string query = "SELECT " +
-                "MessageID AS 'MessageID', " +
+                "MessageID AS 'ID', " +
                 "TBLUSERS_Sender.Username AS 'Gönderen', " +
                 "TBLUSERS_Receiver.Username AS 'Alıcı'," +
                 "Title AS 'Başlık'," +
@@ -244,7 +251,7 @@ namespace RSAMessageApp
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
-                int messageID = Convert.ToInt32(selectedRow.Cells["MessageID"].Value);
+                int messageID = Convert.ToInt32(selectedRow.Cells["ID"].Value);
                 return messageID;
             }
             return -1;
@@ -298,6 +305,8 @@ namespace RSAMessageApp
                         msjDetay.message = encryptedMessageShow;
                         msjDetay.senderName = info.Item1;
                         msjDetay.date = info.Item2;
+                        msjDetay.messageID = messageID;
+                        msjDetay.MesajFormReference = this; // Mesaj formunu referans olarak iletiyoruz
                         msjDetay.Show();
                     }
                     else
@@ -446,8 +455,26 @@ namespace RSAMessageApp
 
             return Tuple.Create(senderName, date);
         }
-        
-        
+
+        private void Mesaj_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Kullanıcıya bir onay iletişimi gösterelim
+            DialogResult result = MessageBox.Show("Formu kapatmak istiyor musunuz?", "Kapatma Onayı", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Kullanıcının seçimine göre işlem yapın
+            if (result == DialogResult.Yes)
+            {
+                // Kullanıcı formun kapatılmasını istiyor
+                Giris grs = new Giris();
+                grs.Show();
+                Mesaj msj = new Mesaj();
+                msj.Close();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
 
     }
 }

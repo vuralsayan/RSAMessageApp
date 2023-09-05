@@ -65,8 +65,6 @@ namespace RSAMessageApp
                 }
             }
 
-           
-           
             // Kullanıcının hash'ini veritabanından al
             string GetHashedPasswordByUsername(string username)
             {
@@ -94,9 +92,11 @@ namespace RSAMessageApp
 
                 return hashedPassword;
             }
+        }
 
-
-
+        private void Giris_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
