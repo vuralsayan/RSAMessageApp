@@ -23,6 +23,12 @@ namespace RSAMessageApp
 
         public string showUsername;
 
+        public string TxtReceiverText
+        {
+            get { return TxtReceiver.Text; }
+            set { TxtReceiver.Text = value; }
+        }
+
         private void Mesaj_Load(object sender, EventArgs e)
         {
             LblUsername.Text = $"Hoşgeldin {showUsername}";
@@ -302,11 +308,14 @@ namespace RSAMessageApp
                     {
                         string encryptedMessageShow = ProcessKeys(encryptedMessage, keys.Item1, keys.Item2, keys.Item3);
                         MesajDetay msjDetay = new MesajDetay();
+                        Mesaj msj = new Mesaj();    
                         msjDetay.message = encryptedMessageShow;
                         msjDetay.senderName = info.Item1;
                         msjDetay.date = info.Item2;
                         msjDetay.messageID = messageID;
-                        msjDetay.MesajFormReference = this; // Mesaj formunu referans olarak iletiyoruz
+                        msjDetay.MesajFormReference = this;         // Mesaj formunu referans olarak iletiyoruz
+                        msjDetay.showUsername = showUsername;
+                        msj.Hide();
                         msjDetay.Show();
                     }
                     else

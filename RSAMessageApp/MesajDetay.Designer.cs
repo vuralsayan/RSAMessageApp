@@ -84,6 +84,7 @@
             this.BtnAnswer.TabIndex = 7;
             this.BtnAnswer.Text = "Cevapla";
             this.BtnAnswer.UseVisualStyleBackColor = true;
+            this.BtnAnswer.Click += new System.EventHandler(this.BtnAnswer_Click);
             // 
             // textBox1
             // 

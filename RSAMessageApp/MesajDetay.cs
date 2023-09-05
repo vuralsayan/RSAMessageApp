@@ -27,6 +27,7 @@ namespace RSAMessageApp
         public string senderName;
         public string date;
         public int messageID;
+        public string showUsername;
 
         private void MesajDetay_Load(object sender, EventArgs e)
         {
@@ -68,6 +69,19 @@ namespace RSAMessageApp
                     }
                 }
             }
+        }
+
+        private void BtnAnswer_Click(object sender, EventArgs e)
+        {
+            string messageSenderName = senderName;
+            Mesaj msj = new Mesaj();
+            msj.TxtReceiverText = messageSenderName;
+            msj.showUsername = showUsername; // Değeri aktar
+            msj.Show();
+            this.Close();
+
+
+
         }
     }
 }
