@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
+using System.Drawing.Drawing2D;
 
 namespace RSAMessageApp
 {
@@ -44,7 +45,7 @@ namespace RSAMessageApp
 
                 if (string.IsNullOrEmpty(storedHashedPassword))
                 {
-                    MessageBox.Show("Kullanıcının şifresi kaydedilmemiş.","Bilgi",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Kullanıcının şifresi kaydedilmemiş.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
@@ -93,6 +94,7 @@ namespace RSAMessageApp
                 return hashedPassword;
             }
         }
+
         
     }
 }

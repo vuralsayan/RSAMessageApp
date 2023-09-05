@@ -29,6 +29,7 @@ namespace RSAMessageApp
             set { TxtReceiver.Text = value; }
         }
 
+
         private void Mesaj_Load(object sender, EventArgs e)
         {
             LblUsername.Text = $"Hoşgeldin {showUsername}";
@@ -481,6 +482,33 @@ namespace RSAMessageApp
             else
             {
                 e.Cancel = true;
+            }
+        }
+
+        //Groupbox ın title rengini değiştirmek için
+        public class ColoredGroupBox : GroupBox
+        {
+            private Color titleColor = Color.Red; // Başlık rengi varsayılan olarak mavi olsun
+
+            public Color TitleColor
+            {
+                get { return titleColor; }
+                set
+                {
+                    titleColor = value;
+                    this.Invalidate(); // Yeniden çizim için Invalidate çağırın
+                }
+            }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+
+                // Başlığı çizmek için bir Brush oluşturun
+                Brush brush = new SolidBrush(titleColor);
+
+                // Başlığı metni çizin
+                e.Graphics.DrawString(this.Text, this.Font, brush, new Point(10, 1));
             }
         }
 

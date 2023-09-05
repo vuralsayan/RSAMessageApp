@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Kayıt));
             this.label1 = new System.Windows.Forms.Label();
             this.TxtUsername = new System.Windows.Forms.TextBox();
             this.TxtPassword = new System.Windows.Forms.TextBox();
@@ -38,22 +39,25 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(50, 58);
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(31, 31);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(132, 24);
+            this.label1.Size = new System.Drawing.Size(152, 24);
             this.label1.TabIndex = 0;
             this.label1.Text = "Kullanıcı Adı:";
             // 
             // TxtUsername
             // 
-            this.TxtUsername.Location = new System.Drawing.Point(179, 52);
+            this.TxtUsername.Location = new System.Drawing.Point(189, 28);
             this.TxtUsername.Name = "TxtUsername";
             this.TxtUsername.Size = new System.Drawing.Size(260, 30);
             this.TxtUsername.TabIndex = 1;
             // 
             // TxtPassword
             // 
-            this.TxtPassword.Location = new System.Drawing.Point(179, 97);
+            this.TxtPassword.Location = new System.Drawing.Point(189, 73);
             this.TxtPassword.Name = "TxtPassword";
             this.TxtPassword.Size = new System.Drawing.Size(260, 30);
             this.TxtPassword.TabIndex = 3;
@@ -61,17 +65,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(102, 103);
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(119, 75);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(58, 24);
+            this.label2.Size = new System.Drawing.Size(66, 24);
             this.label2.TabIndex = 2;
             this.label2.Text = "Şifre:";
             // 
             // BtnRegister
             // 
-            this.BtnRegister.Location = new System.Drawing.Point(289, 145);
+            this.BtnRegister.Location = new System.Drawing.Point(298, 118);
             this.BtnRegister.Name = "BtnRegister";
-            this.BtnRegister.Size = new System.Drawing.Size(150, 43);
+            this.BtnRegister.Size = new System.Drawing.Size(151, 43);
             this.BtnRegister.TabIndex = 4;
             this.BtnRegister.Text = "Kayıt Ol";
             this.BtnRegister.UseVisualStyleBackColor = true;
@@ -82,20 +89,24 @@
             this.AcceptButton = this.BtnRegister;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(121)))), ((int)(((byte)(194)))), ((int)(((byte)(208)))));
-            this.ClientSize = new System.Drawing.Size(518, 254);
+            this.BackColor = System.Drawing.Color.White;
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(520, 173);
             this.Controls.Add(this.BtnRegister);
             this.Controls.Add(this.TxtPassword);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TxtUsername);
             this.Controls.Add(this.label1);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Kayıt";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Kayıt";
+            this.Text = "RSA Message App";
             this.ResumeLayout(false);
             this.PerformLayout();
 
