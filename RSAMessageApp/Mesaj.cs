@@ -512,6 +512,12 @@ namespace RSAMessageApp
             }
         }
 
+        private void BtnUsers_Click(object sender, EventArgs e)
+        {
+            Kullanicilar users = new Kullanicilar();
+            users.Show();
+
+        }
     }
 }
 

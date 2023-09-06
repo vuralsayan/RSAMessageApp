@@ -51,6 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connection.cs" />
+    <Compile Include="Kullanicilar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Kullanicilar.Designer.cs">
+      <DependentUpon>Kullanicilar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mesaj.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,6 +88,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Kayıt.resx">
       <DependentUpon>Kayıt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Kullanicilar.resx">
+      <DependentUpon>Kullanicilar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Mesaj.resx">
       <DependentUpon>Mesaj.cs</DependentUpon>
