@@ -21,8 +21,8 @@ namespace RSAMessageApp
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
         }
 
-        public string showUsername { get; set; }    
-       
+        public string showUsername { get; set; }
+
         public string TxtReceiverText
         {
             get { return TxtReceiver.Text; }
@@ -33,6 +33,7 @@ namespace RSAMessageApp
         private void Mesaj_Load(object sender, EventArgs e)
         {
             LblUsername.Text = $"Hoşgeldin {showUsername}";
+            dataGridView1.CellFormatting += new DataGridViewCellFormattingEventHandler(dataGridView1_CellFormatting);
             ShowMessages();
         }
 
@@ -524,6 +525,23 @@ namespace RSAMessageApp
             GidenMesaj gdnmsj = new GidenMesaj();
             gdnmsj.senderName = showUsername;
             gdnmsj.Show();
+        }
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dataGridView1.Columns[e.RowIndex].Name == "ReadStatus")
+            {
+                DataGridViewCell cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+                if (cell.Value != null && cell.Value.ToString() == "True")
+                {
+                    e.CellStyle.ForeColor = Color.Blue;
+                }
+                else
+                {
+                    e.CellStyle.ForeColor = Color.Red;
+                }
+            }
         }
     }
 }

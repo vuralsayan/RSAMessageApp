@@ -34,6 +34,7 @@ namespace RSAMessageApp
             textBox1.Text = senderName;
             textBox2.Text = date;
             richTextBox1.Text = message;
+            SetMessageAsRead(messageID);
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
@@ -94,6 +95,34 @@ namespace RSAMessageApp
             this.Close();
         }
 
+        // Veritabanında ilgili mesajın "ReadStatus" değerini 1 yapar
+        private void SetMessageAsRead(int messageID)
+        {
+            using (SqlConnection connection = Connection.CreateConnection())
+            {
+                connection.Open();
+
+                string query = "UPDATE TBLMESSAGES SET ReadStatus = 1 WHERE MessageID = @MessageID";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@MessageID", messageID);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Mesaj okundu", "Bilgi");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Mesaj okunamadı", "Bilgi");
+                    }
+                }
+
+                connection.Close();
+            }
+        }
 
     }
 }
