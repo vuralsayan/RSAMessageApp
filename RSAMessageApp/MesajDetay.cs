@@ -108,21 +108,19 @@ namespace RSAMessageApp
                 {
                     command.Parameters.AddWithValue("@MessageID", messageID);
 
-                    int rowsAffected = command.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        MessageBox.Show("Mesaj okundu", "Bilgi");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Mesaj okunamadı", "Bilgi");
-                    }
+                    command.ExecuteNonQuery();
                 }
 
                 connection.Close();
             }
         }
 
+        private void MesajDetay_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(MesajFormReference != null)
+            {
+                MesajFormReference.ShowMessages();
+            }
+        }
     }
 }

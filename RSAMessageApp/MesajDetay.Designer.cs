@@ -128,6 +128,7 @@
             this.Name = "MesajDetay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RSA Message App";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MesajDetay_FormClosing);
             this.Load += new System.EventHandler(this.MesajDetay_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

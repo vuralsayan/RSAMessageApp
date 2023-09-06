@@ -46,6 +46,7 @@ namespace RSAMessageApp
             dataGridView1.Columns["Alıcı"].Width = 140; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Başlık"].Width = 210; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Tarih"].Width = 170; // "ID" sütununu 50 piksel genişliğinde ayarla
+            dataGridView1.Columns["Okundu"].Width = 70; // "ID" sütununu 50 piksel genişliğinde ayarla
         }
 
         public string GetPrivateKeyByUsername(string username)
@@ -111,7 +112,8 @@ namespace RSAMessageApp
                 "TBLUSERS_Sender.Username AS 'Gönderen', " +
                 "TBLUSERS_Receiver.Username AS 'Alıcı'," +
                 "Title AS 'Başlık'," +
-                "FORMAT(TBLMESSAGES.Timestamp, 'dd-MM-yyyy HH:mm:ss') AS 'Tarih' " +
+                "FORMAT(TBLMESSAGES.Timestamp, 'dd-MM-yyyy HH:mm:ss') AS 'Tarih' ," +
+                "ReadStatus AS 'Okundu' " +
                 "FROM TBLMESSAGES " +
                 "INNER JOIN TBLUSERS AS TBLUSERS_Sender ON TBLMESSAGES.SenderID = TBLUSERS_Sender.UserID " +
                 "INNER JOIN TBLUSERS AS TBLUSERS_Receiver ON TBLMESSAGES.ReceiverID = TBLUSERS_Receiver.UserID " +
@@ -487,31 +489,31 @@ namespace RSAMessageApp
         }
 
         //Groupbox ın title rengini değiştirmek için
-        public class ColoredGroupBox : GroupBox
-        {
-            private Color titleColor = Color.Red; // Başlık rengi varsayılan olarak mavi olsun
+        //public class ColoredGroupBox : GroupBox
+        //{
+        //    private Color titleColor = Color.Red; // Başlık rengi varsayılan olarak mavi olsun
 
-            public Color TitleColor
-            {
-                get { return titleColor; }
-                set
-                {
-                    titleColor = value;
-                    this.Invalidate(); // Yeniden çizim için Invalidate çağırın
-                }
-            }
+        //    public Color TitleColor
+        //    {
+        //        get { return titleColor; }
+        //        set
+        //        {
+        //            titleColor = value;
+        //            this.Invalidate(); // Yeniden çizim için Invalidate çağırın
+        //        }
+        //    }
 
-            protected override void OnPaint(PaintEventArgs e)
-            {
-                base.OnPaint(e);
+        //    protected override void OnPaint(PaintEventArgs e)
+        //    {
+        //        base.OnPaint(e);
 
-                // Başlığı çizmek için bir Brush oluşturun
-                Brush brush = new SolidBrush(titleColor);
+        //        // Başlığı çizmek için bir Brush oluşturun
+        //        Brush brush = new SolidBrush(titleColor);
 
-                // Başlığı metni çizin
-                e.Graphics.DrawString(this.Text, this.Font, brush, new Point(10, 1));
-            }
-        }
+        //        // Başlığı metni çizin
+        //        e.Graphics.DrawString(this.Text, this.Font, brush, new Point(10, 1));
+        //    }
+        //}
 
         private void BtnUsers_Click(object sender, EventArgs e)
         {
@@ -529,7 +531,7 @@ namespace RSAMessageApp
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.RowIndex >= 0 && dataGridView1.Columns[e.RowIndex].Name == "ReadStatus")
+            if (e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "ReadStatus")
             {
                 DataGridViewCell cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
