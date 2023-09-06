@@ -42,6 +42,7 @@
             this.TxtTitle = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.BtnUsers = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -195,6 +196,18 @@
             this.BtnUsers.UseVisualStyleBackColor = true;
             this.BtnUsers.Click += new System.EventHandler(this.BtnUsers_Click);
             // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button2.ForeColor = System.Drawing.Color.Black;
+            this.button2.Location = new System.Drawing.Point(1017, 51);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(222, 68);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Giden Kutusu";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Mesaj
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
@@ -203,6 +216,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1262, 630);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.LblUsername);
@@ -239,6 +253,7 @@
         private System.Windows.Forms.TextBox TxtTitle;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button BtnUsers;
+        private System.Windows.Forms.Button button2;
     }
 }
 

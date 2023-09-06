@@ -22,7 +22,7 @@ namespace RSAMessageApp
         }
 
         public string showUsername { get; set; }    
-
+       
         public string TxtReceiverText
         {
             get { return TxtReceiver.Text; }
@@ -40,10 +40,10 @@ namespace RSAMessageApp
         {
             DataTable dt = GetMessagesFromDatabase(GetUserIDByUsername(showUsername));
             dataGridView1.DataSource = dt;
-            dataGridView1.Columns["ID"].Width = 70; // "ID" sütununu 50 piksel genişliğinde ayarla
+            dataGridView1.Columns["ID"].Width = 50; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Gönderen"].Width = 130; // "ID" sütununu 50 piksel genişliğinde ayarla
-            dataGridView1.Columns["Alıcı"].Width = 130; // "ID" sütununu 50 piksel genişliğinde ayarla
-            dataGridView1.Columns["Başlık"].Width = 200; // "ID" sütununu 50 piksel genişliğinde ayarla
+            dataGridView1.Columns["Alıcı"].Width = 140; // "ID" sütununu 50 piksel genişliğinde ayarla
+            dataGridView1.Columns["Başlık"].Width = 210; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Tarih"].Width = 170; // "ID" sütununu 50 piksel genişliğinde ayarla
         }
 
@@ -102,7 +102,7 @@ namespace RSAMessageApp
             return publicKey;
         }
 
-        //Veritabanından mesaj başlıklarını çekme
+        //Veritabanından mesajları çekme
         private DataTable GetMessagesFromDatabase(int userID)
         {
             string query = "SELECT " +
@@ -517,6 +517,13 @@ namespace RSAMessageApp
             Kullanicilar users = new Kullanicilar();
             users.Show();
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            GidenMesaj gdnmsj = new GidenMesaj();
+            gdnmsj.senderName = showUsername;
+            gdnmsj.Show();
         }
     }
 }
