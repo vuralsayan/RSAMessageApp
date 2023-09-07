@@ -307,6 +307,7 @@ namespace RSAMessageApp
                     string encryptedMessage = GetEncryptedMessageByMessageID(messageID);
                     var keys = GetSenderAndReceiverKeysByMessageID(messageID);
                     var info = GetSenderNameAndDateByMessageID(messageID);
+                    var title = GetTitleByMessageID(messageID);
 
                     if (!string.IsNullOrEmpty(encryptedMessage))
                     {
@@ -317,6 +318,7 @@ namespace RSAMessageApp
                         msjDetay.senderName = info.Item1;
                         msjDetay.date = info.Item2;
                         msjDetay.messageID = messageID;
+                        msjDetay.title = title;
                         msjDetay.MesajFormReference = this;         // Mesaj formunu referans olarak iletiyoruz
                         msjDetay.showUsername = showUsername;
                         msjDetay.Show();
@@ -332,6 +334,33 @@ namespace RSAMessageApp
                 }
             }
 
+        }
+
+        public string GetTitleByMessageID(int messageID)
+        {
+            string title = "";
+
+            using (SqlConnection connection = Connection.CreateConnection())
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand("SELECT Title FROM TBLMESSAGES WHERE MessageID = @MessageID", connection))
+                {
+                    command.Parameters.AddWithValue("@MessageID", messageID);
+
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        if (dr.Read())
+                        {
+                            title = dr["Title"].ToString();
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+
+            return title;
         }
 
         public Tuple<string, string, string> GetSenderAndReceiverKeysByMessageID(int messageID)

@@ -34,8 +34,10 @@
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnAnswer = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.TxtSender = new System.Windows.Forms.TextBox();
+            this.TxtDate = new System.Windows.Forms.TextBox();
+            this.TxtTitle = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -44,9 +46,9 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(6, 27);
+            this.label1.Location = new System.Drawing.Point(16, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 24);
+            this.label1.Size = new System.Drawing.Size(146, 29);
             this.label1.TabIndex = 3;
             this.label1.Text = "Gönderen:";
             // 
@@ -56,9 +58,9 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(64, 85);
+            this.label2.Location = new System.Drawing.Point(64, 135);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 24);
+            this.label2.Size = new System.Drawing.Size(88, 29);
             this.label2.TabIndex = 4;
             this.label2.Text = "Tarih:";
             // 
@@ -73,7 +75,7 @@
             // 
             // BtnDelete
             // 
-            this.BtnDelete.Location = new System.Drawing.Point(21, 178);
+            this.BtnDelete.Location = new System.Drawing.Point(21, 210);
             this.BtnDelete.Name = "BtnDelete";
             this.BtnDelete.Size = new System.Drawing.Size(194, 48);
             this.BtnDelete.TabIndex = 6;
@@ -83,7 +85,7 @@
             // 
             // BtnAnswer
             // 
-            this.BtnAnswer.Location = new System.Drawing.Point(221, 178);
+            this.BtnAnswer.Location = new System.Drawing.Point(221, 210);
             this.BtnAnswer.Name = "BtnAnswer";
             this.BtnAnswer.Size = new System.Drawing.Size(194, 48);
             this.BtnAnswer.TabIndex = 7;
@@ -91,35 +93,57 @@
             this.BtnAnswer.UseVisualStyleBackColor = true;
             this.BtnAnswer.Click += new System.EventHandler(this.BtnAnswer_Click);
             // 
-            // textBox1
+            // TxtSender
             // 
-            this.textBox1.Location = new System.Drawing.Point(158, 21);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(257, 30);
-            this.textBox1.TabIndex = 8;
+            this.TxtSender.Location = new System.Drawing.Point(158, 21);
+            this.TxtSender.Name = "TxtSender";
+            this.TxtSender.Size = new System.Drawing.Size(257, 35);
+            this.TxtSender.TabIndex = 8;
             // 
-            // textBox2
+            // TxtDate
             // 
-            this.textBox2.Location = new System.Drawing.Point(158, 79);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(257, 30);
-            this.textBox2.TabIndex = 9;
+            this.TxtDate.Location = new System.Drawing.Point(158, 129);
+            this.TxtDate.Name = "TxtDate";
+            this.TxtDate.Size = new System.Drawing.Size(257, 35);
+            this.TxtDate.TabIndex = 9;
+            // 
+            // TxtTitle
+            // 
+            this.TxtTitle.Location = new System.Drawing.Point(158, 75);
+            this.TxtTitle.Name = "TxtTitle";
+            this.TxtTitle.Size = new System.Drawing.Size(257, 35);
+            this.TxtTitle.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(64, 81);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(97, 29);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Başlık:";
             // 
             // MesajDetay
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1102, 247);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(1102, 270);
+            this.Controls.Add(this.TxtTitle);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.TxtDate);
+            this.Controls.Add(this.TxtSender);
             this.Controls.Add(this.BtnAnswer);
             this.Controls.Add(this.BtnDelete);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -141,7 +165,9 @@
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Button BtnDelete;
         private System.Windows.Forms.Button BtnAnswer;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox TxtSender;
+        private System.Windows.Forms.TextBox TxtDate;
+        private System.Windows.Forms.TextBox TxtTitle;
+        private System.Windows.Forms.Label label3;
     }
 }

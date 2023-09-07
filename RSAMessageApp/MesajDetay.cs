@@ -25,14 +25,16 @@ namespace RSAMessageApp
 
         public string message;
         public string senderName;
+        public string title;
         public string date;
         public int messageID;
         public string showUsername;
 
         private void MesajDetay_Load(object sender, EventArgs e)
         {
-            textBox1.Text = senderName;
-            textBox2.Text = date;
+            TxtSender.Text = senderName;
+            TxtDate.Text = date;
+            TxtTitle.Text = title;
             richTextBox1.Text = message;
             SetMessageAsRead(messageID);
         }
