@@ -29,12 +29,24 @@ namespace RSAMessageApp
         private void BtnLogin_Click(object sender, EventArgs e)
         {
 
-            if (AuthenticateUser(TxtUsername.Text, TxtPassword.Text) == true)
+            try
             {
-                Mesaj msj = new Mesaj();
-                msj.showUsername = TxtUsername.Text;
-                msj.Show();
-                this.Hide();
+                if (AuthenticateUser(TxtUsername.Text, TxtPassword.Text) == true)
+                {
+                    Mesaj msj = new Mesaj();
+                    msj.showUsername = TxtUsername.Text;
+                    msj.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Kullanıcı adı veya şifre hatalı.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Bir hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             // Kullanıcının girişini doğrulama
@@ -95,6 +107,6 @@ namespace RSAMessageApp
             }
         }
 
-        
+
     }
 }
