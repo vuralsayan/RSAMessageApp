@@ -44,7 +44,7 @@ namespace RSAMessageApp
             dataGridView1.Columns["ID"].Width = 50; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Gönderen"].Width = 130; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Alıcı"].Width = 140; // "ID" sütununu 50 piksel genişliğinde ayarla
-            dataGridView1.Columns["Başlık"].Width = 210; // "ID" sütununu 50 piksel genişliğinde ayarla
+            dataGridView1.Columns["Başlık"].Width = 172; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Tarih"].Width = 170; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Okundu"].Width = 70; // "ID" sütununu 50 piksel genişliğinde ayarla
         }
