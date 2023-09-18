@@ -68,7 +68,7 @@ namespace RSAMessageApp
 
                     if (MesajFormReference != null)
                     {
-                        MesajFormReference.ShowMessages();
+                        MesajFormReference.ShowMessagesAsync();
                     }
                 }
             }
@@ -121,7 +121,7 @@ namespace RSAMessageApp
         {
             if(MesajFormReference != null)
             {
-                MesajFormReference.ShowMessages();
+                MesajFormReference.ShowMessagesAsync();
             }
         }
     }

@@ -14,20 +14,79 @@ namespace RSAMessageApp
 {
     public partial class Mesaj : Form
     {
+
+        private Timer timer;
         public Mesaj()
         {
             InitializeComponent();
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            mesajTimer.Interval = 5000;                               //5 saniyede bir 
-            messageTimer.Tick += new EventHandler(mesajTimer_Tick);
+
+            timer = new Timer();
+            timer.Interval = 5000;          //her 5 saniyede
+            timer.Tick += Timer_Tick;
         }
 
-        
+        private async void Timer_Tick(object sender, EventArgs e)
+        {
+            string username = showUsername;
+            int userID = GetUserIDByUsername(username);
+
+            DataTable messages = await FetchDataFromDatabaseAsync(userID); // userID'yi kendi kullanımınıza göre ayarlayın
+            dataGridView1.DataSource = messages;
+        }
+
+        private void StartFetchingData()
+        {
+            // Timer'ı başlatmak için bu metodu kullanabilirsiniz
+            timer.Start();
+        }
+
+        private void StopFetchingData()
+        {
+            // Timer'ı durdurmak için bu metodu kullanabilirsiniz
+            timer.Stop();
+        }
+
+       
+
+
+        private async Task<DataTable> FetchDataFromDatabaseAsync(int userID)
+        {
+            DataTable dt = new DataTable();
+            try
+            {
+                string query = "SELECT " +
+                    "MessageID AS 'ID', " +
+                    "TBLUSERS_Sender.Username AS 'Gönderen', " +
+                    "TBLUSERS_Receiver.Username AS 'Alıcı'," +
+                    "Title AS 'Başlık'," +
+                    "FORMAT(TBLMESSAGES.Timestamp, 'dd-MM-yyyy HH:mm:ss') AS 'Tarih' ," +
+                    "ReadStatus AS 'Okundu' " +
+                    "FROM TBLMESSAGES " +
+                    "INNER JOIN TBLUSERS AS TBLUSERS_Sender ON TBLMESSAGES.SenderID = TBLUSERS_Sender.UserID " +
+                    "INNER JOIN TBLUSERS AS TBLUSERS_Receiver ON TBLMESSAGES.ReceiverID = TBLUSERS_Receiver.UserID " +
+                    "WHERE TBLUSERS_Receiver.UserID = @UserID";
+
+                SqlDataAdapter da = new SqlDataAdapter(query, Connection.CreateConnection());
+                da.SelectCommand.Parameters.AddWithValue("@UserID", userID);
+
+                await Task.Run(() =>
+                {
+                    da.Fill(dt);
+                });
+            }
+            catch (Exception ex)
+            {
+                // Hata yönetimi burada yapılabilir
+                MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return dt;
+        }
+
 
         public string showUsername { get; set; }
-        private Timer messageTimer = new Timer();   
-
         public string TxtReceiverText
         {
             get { return TxtReceiver.Text; }
@@ -38,24 +97,36 @@ namespace RSAMessageApp
         private void Mesaj_Load(object sender, EventArgs e)
         {
             LblUsername.Text = $"Hoşgeldin {showUsername}";
-            ShowMessages();
+            StartFetchingData();
         }
 
-        public void ShowMessages()
+        public async Task ShowMessagesAsync()
         {
-            DataTable dt = GetMessagesFromDatabase(GetUserIDByUsername(showUsername));
-            dataGridView1.DataSource = dt;
-            dataGridView1.Columns["ID"].Width = 50; // "ID" sütununu 50 piksel genişliğinde ayarla
-            dataGridView1.Columns["Gönderen"].Width = 130; // "ID" sütununu 50 piksel genişliğinde ayarla
-            dataGridView1.Columns["Alıcı"].Width = 140; // "ID" sütununu 50 piksel genişliğinde ayarla
-            dataGridView1.Columns["Başlık"].Width = 172; // "ID" sütununu 50 piksel genişliğinde ayarla
-            dataGridView1.Columns["Tarih"].Width = 170; // "ID" sütununu 50 piksel genişliğinde ayarla
-            dataGridView1.Columns["Okundu"].Width = 70; // "ID" sütununu 50 piksel genişliğinde ayarla
+            try
+            {
+                int userID = GetUserIDByUsername(showUsername);
+                DataTable dt = await FetchDataFromDatabaseAsync(userID);
+
+                // Verileri DataGridView'e bağlayın
+                dataGridView1.DataSource = dt;
+                dataGridView1.Columns["ID"].Width = 50;
+                dataGridView1.Columns["Gönderen"].Width = 130;
+                dataGridView1.Columns["Alıcı"].Width = 140;
+                dataGridView1.Columns["Başlık"].Width = 172;
+                dataGridView1.Columns["Tarih"].Width = 170;
+                dataGridView1.Columns["Okundu"].Width = 70;
+            }
+            catch (Exception ex)
+            {
+                // Hata yönetimi burada yapılabilir
+                MessageBox.Show($"Hata: {ex.Message}", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         private void mesajTimer_Tick(object sender, EventArgs e)
         {
-            ShowMessages();
+            ShowMessagesAsync();
         }
 
         public string GetPrivateKeyByUsername(string username)
@@ -137,7 +208,7 @@ namespace RSAMessageApp
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            ShowMessages();
+            ShowMessagesAsync();
             TxtReceiver.Clear();
             TxtTitle.Clear();
             richTextBox1.Clear();
@@ -247,7 +318,7 @@ namespace RSAMessageApp
             SaveEncryptedMessageToDatabase(senderID, receiverID, signedMessage);
 
             MessageBox.Show("Mesaj başarıyla gönderildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ShowMessages();
+            ShowMessagesAsync();
         }
 
         private void SaveEncryptedMessageToDatabase(int senderID, int receiverID, string encryptedMessage)
@@ -524,6 +595,7 @@ namespace RSAMessageApp
             if (result == DialogResult.Yes)
             {
                 // Kullanıcı formun kapatılmasını istiyor
+                StopFetchingData();
                 Giris grs = new Giris();
                 grs.Show();
                 Mesaj msj = new Mesaj();
@@ -535,7 +607,7 @@ namespace RSAMessageApp
             }
         }
 
-        
+
 
         private void BtnUsers_Click(object sender, EventArgs e)
         {
@@ -551,7 +623,7 @@ namespace RSAMessageApp
             gdnmsj.Show();
         }
 
-       
+
     }
 }
 
