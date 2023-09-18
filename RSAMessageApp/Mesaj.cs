@@ -19,14 +19,11 @@ namespace RSAMessageApp
             InitializeComponent();
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            messageTimer.Interval = 5000;                               //5 saniyede bir 
-            messageTimer.Tick += new EventHandler(messageTimer_Tick);
+            mesajTimer.Interval = 5000;                               //5 saniyede bir 
+            messageTimer.Tick += new EventHandler(mesajTimer_Tick);
         }
 
-        private void messageTimer_Tick(object sender, EventArgs e) // Timer'ın Tick eventi gerçekleştiğinde çalışacak kodlar
-        {
-            ShowMessages();
-        }
+        
 
         public string showUsername { get; set; }
         private Timer messageTimer = new Timer();   
@@ -54,6 +51,11 @@ namespace RSAMessageApp
             dataGridView1.Columns["Başlık"].Width = 172; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Tarih"].Width = 170; // "ID" sütununu 50 piksel genişliğinde ayarla
             dataGridView1.Columns["Okundu"].Width = 70; // "ID" sütununu 50 piksel genişliğinde ayarla
+        }
+
+        private void mesajTimer_Tick(object sender, EventArgs e)
+        {
+            ShowMessages();
         }
 
         public string GetPrivateKeyByUsername(string username)
@@ -550,8 +552,6 @@ namespace RSAMessageApp
         }
 
        
-
-
     }
 }
 

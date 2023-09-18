@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mesaj));
             this.LblUsername = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -43,6 +44,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.BtnUsers = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.mesajTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -225,6 +227,11 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
+            // mesajTimer
+            // 
+            this.mesajTimer.Enabled = true;
+            this.mesajTimer.Tick += new System.EventHandler(this.mesajTimer_Tick);
+            // 
             // Mesaj
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 27F);
@@ -273,6 +280,7 @@
         private System.Windows.Forms.Button BtnUsers;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Timer mesajTimer;
     }
 }
 
