@@ -12,7 +12,7 @@ namespace RSAMessageApp
         //Data Source=Vural\SQLEXPRESS;Initial Catalog=DbRsaMessage;Integrated Security=True
         //Data Source = BTSTAJER08\MSSQLSERVER01;Initial Catalog = DbRsaMessage; User ID = vural; Password=vural123
         //Data Source=BTSTYJRNB12\SQLEXPRESS;Initial Catalog=DbRsaMessage;User ID=vural; Password=vural.123
-        private static string connectionString = @"Data Source=BTSTYJRNB12\SQLEXPRESS;Initial Catalog=DbRsaMessage;User ID=vural; Password=vural.123";
+        private static string connectionString = @"Data Source=BTSTYJRNB12\SQLEXPRESS;Initial Catalog=DbRsaMessage;User ID=test; Password=test.123";
         public static SqlConnection CreateConnection()
         {
             SqlConnection connection = new SqlConnection(connectionString);

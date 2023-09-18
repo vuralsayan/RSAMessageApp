@@ -19,9 +19,17 @@ namespace RSAMessageApp
             InitializeComponent();
             this.AutoSize = true;
             this.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            messageTimer.Interval = 5000;                               //5 saniyede bir 
+            messageTimer.Tick += new EventHandler(messageTimer_Tick);
+        }
+
+        private void messageTimer_Tick(object sender, EventArgs e) // Timer'ın Tick eventi gerçekleştiğinde çalışacak kodlar
+        {
+            ShowMessages();
         }
 
         public string showUsername { get; set; }
+        private Timer messageTimer = new Timer();   
 
         public string TxtReceiverText
         {
