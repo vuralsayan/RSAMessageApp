@@ -55,7 +55,7 @@
             this.LblUsername.BackColor = System.Drawing.Color.Transparent;
             this.LblUsername.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.LblUsername.ForeColor = System.Drawing.Color.White;
-            this.LblUsername.Location = new System.Drawing.Point(13, 22);
+            this.LblUsername.Location = new System.Drawing.Point(8, 9);
             this.LblUsername.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LblUsername.Name = "LblUsername";
             this.LblUsername.Size = new System.Drawing.Size(66, 29);
@@ -67,11 +67,11 @@
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
-            this.groupBox1.Location = new System.Drawing.Point(447, 22);
+            this.groupBox1.Location = new System.Drawing.Point(447, 55);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(743, 272);
+            this.groupBox1.Size = new System.Drawing.Size(743, 518);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Gelen Kutusu";
@@ -87,7 +87,7 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 62;
             this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(735, 239);
+            this.dataGridView1.Size = new System.Drawing.Size(735, 485);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             // 
@@ -113,10 +113,10 @@
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.richTextBox1.Location = new System.Drawing.Point(447, 302);
+            this.richTextBox1.Location = new System.Drawing.Point(13, 331);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(743, 203);
+            this.richTextBox1.Size = new System.Drawing.Size(420, 242);
             this.richTextBox1.TabIndex = 2;
             this.richTextBox1.Text = "";
             // 
@@ -124,7 +124,7 @@
             // 
             this.button1.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(200, 156);
+            this.button1.Location = new System.Drawing.Point(200, 127);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(190, 58);
@@ -137,7 +137,7 @@
             // 
             this.BtnClear.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnClear.ForeColor = System.Drawing.Color.Black;
-            this.BtnClear.Location = new System.Drawing.Point(11, 156);
+            this.BtnClear.Location = new System.Drawing.Point(11, 127);
             this.BtnClear.Margin = new System.Windows.Forms.Padding(4);
             this.BtnClear.Name = "BtnClear";
             this.BtnClear.Size = new System.Drawing.Size(181, 58);
@@ -178,11 +178,11 @@
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.groupBox3.ForeColor = System.Drawing.Color.White;
-            this.groupBox3.Location = new System.Drawing.Point(13, 212);
+            this.groupBox3.Location = new System.Drawing.Point(13, 55);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(420, 293);
+            this.groupBox3.Size = new System.Drawing.Size(420, 272);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Mesaj Paneli";
@@ -191,7 +191,7 @@
             // 
             this.button2.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(200, 222);
+            this.button2.Location = new System.Drawing.Point(200, 193);
             this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(190, 58);
@@ -204,7 +204,7 @@
             // 
             this.BtnUsers.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnUsers.ForeColor = System.Drawing.Color.Black;
-            this.BtnUsers.Location = new System.Drawing.Point(11, 222);
+            this.BtnUsers.Location = new System.Drawing.Point(11, 193);
             this.BtnUsers.Margin = new System.Windows.Forms.Padding(4);
             this.BtnUsers.Name = "BtnUsers";
             this.BtnUsers.Size = new System.Drawing.Size(181, 58);
@@ -217,7 +217,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 64);
+            this.pictureBox1.Location = new System.Drawing.Point(1123, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(67, 35);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -232,7 +232,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1206, 532);
+            this.ClientSize = new System.Drawing.Size(1199, 578);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
