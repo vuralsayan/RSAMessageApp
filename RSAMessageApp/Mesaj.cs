@@ -185,34 +185,30 @@ namespace RSAMessageApp
         }
 
         //Veritabanından mesajları çekme
-        private DataTable GetMessagesFromDatabase(int userID)
-        {
-            string query = "SELECT " +
-                "MessageID AS 'ID', " +
-                "TBLUSERS_Sender.Username AS 'Gönderen', " +
-                "TBLUSERS_Receiver.Username AS 'Alıcı'," +
-                "Title AS 'Başlık'," +
-                "FORMAT(TBLMESSAGES.Timestamp, 'dd-MM-yyyy HH:mm:ss') AS 'Tarih' ," +
-                "ReadStatus AS 'Okundu' " +
-                "FROM TBLMESSAGES " +
-                "INNER JOIN TBLUSERS AS TBLUSERS_Sender ON TBLMESSAGES.SenderID = TBLUSERS_Sender.UserID " +
-                "INNER JOIN TBLUSERS AS TBLUSERS_Receiver ON TBLMESSAGES.ReceiverID = TBLUSERS_Receiver.UserID " +
-                "WHERE TBLUSERS_Receiver.UserID = @UserID";
+        //private DataTable GetMessagesFromDatabase(int userID)
+        //{
+        //    string query = "SELECT " +
+        //        "MessageID AS 'ID', " +
+        //        "TBLUSERS_Sender.Username AS 'Gönderen', " +
+        //        "TBLUSERS_Receiver.Username AS 'Alıcı'," +
+        //        "Title AS 'Başlık'," +
+        //        "FORMAT(TBLMESSAGES.Timestamp, 'dd-MM-yyyy HH:mm:ss') AS 'Tarih' ," +
+        //        "ReadStatus AS 'Okundu' " +
+        //        "FROM TBLMESSAGES " +
+        //        "INNER JOIN TBLUSERS AS TBLUSERS_Sender ON TBLMESSAGES.SenderID = TBLUSERS_Sender.UserID " +
+        //        "INNER JOIN TBLUSERS AS TBLUSERS_Receiver ON TBLMESSAGES.ReceiverID = TBLUSERS_Receiver.UserID " +
+        //        "WHERE TBLUSERS_Receiver.UserID = @UserID";
 
-            SqlDataAdapter da = new SqlDataAdapter(query, Connection.CreateConnection());
-            da.SelectCommand.Parameters.AddWithValue("@UserID", userID);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            return dt;
-        }
+        //    SqlDataAdapter da = new SqlDataAdapter(query, Connection.CreateConnection());
+        //    da.SelectCommand.Parameters.AddWithValue("@UserID", userID);
+        //    DataTable dt = new DataTable();
+        //    da.Fill(dt);
+        //    return dt;
+        //}
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             ShowMessagesAsync();
-            TxtReceiver.Clear();
-            TxtTitle.Clear();
-            richTextBox1.Clear();
-            TxtReceiver.Focus();
         }
 
         public string EncryptAndSignMessage(string message, string receiverPublicKey, string senderPrivateKey)
@@ -296,30 +292,37 @@ namespace RSAMessageApp
 
         private void button1_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string senderName = showUsername;
+                string receiverName = TxtReceiver.Text;
+                string message = richTextBox1.Text;
 
-            string senderName = showUsername;
-            string receiverName = TxtReceiver.Text;
-            string message = richTextBox1.Text;
+                // Gönderen ve alıcının keyleri alma
+                string senderPrivateKey = GetPrivateKeyByUsername(senderName);
+                string senderPublicKey = GetPublicKeyByUsername(senderName);
+                string receiverPublicKey = GetPublicKeyByUsername(receiverName);
+                string receiverPrivateKey = GetPrivateKeyByUsername(receiverName);
 
-            // Gönderen ve alıcının keyleri alma
-            string senderPrivateKey = GetPrivateKeyByUsername(senderName);
-            string senderPublicKey = GetPublicKeyByUsername(senderName);
-            string receiverPublicKey = GetPublicKeyByUsername(receiverName);
-            string receiverPrivateKey = GetPrivateKeyByUsername(receiverName);
+                // Mesajı şifrele ve imzala
+                string signedMessage = EncryptAndSignMessage(message, receiverPublicKey, senderPrivateKey);
 
-            // Mesajı şifrele ve imzala
-            string signedMessage = EncryptAndSignMessage(message, receiverPublicKey, senderPrivateKey);
+                // Gönderen ve alıcının ID'lerini al
+                int senderID = GetUserIDByUsername(senderName);
+                int receiverID = GetUserIDByUsername(receiverName);
 
-            // Gönderen ve alıcının ID'lerini al
-            int senderID = GetUserIDByUsername(senderName);
-            int receiverID = GetUserIDByUsername(receiverName);
+                // Şifrelenmiş ve imzalanmış mesajı veritabanına kaydet
+                SaveEncryptedMessageToDatabase(senderID, receiverID, signedMessage);
 
-            // Şifrelenmiş ve imzalanmış mesajı veritabanına kaydet
-            SaveEncryptedMessageToDatabase(senderID, receiverID, signedMessage);
-
-            MessageBox.Show("Mesaj başarıyla gönderildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            ShowMessagesAsync();
+                MessageBox.Show("Mesaj başarıyla gönderildi.", "Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ShowMessagesAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
         private void SaveEncryptedMessageToDatabase(int senderID, int receiverID, string encryptedMessage)
         {
