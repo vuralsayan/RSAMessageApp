@@ -40,11 +40,13 @@
             this.label4 = new System.Windows.Forms.Label();
             this.TxtTitle = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.BtnUsers = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.BtnUsers = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // LblUsername
@@ -66,9 +68,9 @@
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
             this.groupBox1.Location = new System.Drawing.Point(447, 22);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(743, 272);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
@@ -80,7 +82,7 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.Control;
             this.dataGridView1.Location = new System.Drawing.Point(4, 29);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidth = 62;
@@ -88,7 +90,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(735, 239);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
             // label2
             // 
@@ -104,7 +105,7 @@
             // TxtReceiver
             // 
             this.TxtReceiver.Location = new System.Drawing.Point(77, 41);
-            this.TxtReceiver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TxtReceiver.Margin = new System.Windows.Forms.Padding(4);
             this.TxtReceiver.Name = "TxtReceiver";
             this.TxtReceiver.Size = new System.Drawing.Size(313, 35);
             this.TxtReceiver.TabIndex = 1;
@@ -113,7 +114,7 @@
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.richTextBox1.Location = new System.Drawing.Point(447, 302);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(743, 203);
             this.richTextBox1.TabIndex = 2;
@@ -124,7 +125,7 @@
             this.button1.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.button1.ForeColor = System.Drawing.Color.Black;
             this.button1.Location = new System.Drawing.Point(200, 156);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(190, 58);
             this.button1.TabIndex = 4;
@@ -137,7 +138,7 @@
             this.BtnClear.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnClear.ForeColor = System.Drawing.Color.Black;
             this.BtnClear.Location = new System.Drawing.Point(11, 156);
-            this.BtnClear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtnClear.Margin = new System.Windows.Forms.Padding(4);
             this.BtnClear.Name = "BtnClear";
             this.BtnClear.Size = new System.Drawing.Size(181, 58);
             this.BtnClear.TabIndex = 5;
@@ -159,7 +160,7 @@
             // TxtTitle
             // 
             this.TxtTitle.Location = new System.Drawing.Point(77, 82);
-            this.TxtTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TxtTitle.Margin = new System.Windows.Forms.Padding(4);
             this.TxtTitle.Name = "TxtTitle";
             this.TxtTitle.Size = new System.Drawing.Size(313, 35);
             this.TxtTitle.TabIndex = 7;
@@ -178,20 +179,33 @@
             this.groupBox3.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.groupBox3.ForeColor = System.Drawing.Color.White;
             this.groupBox3.Location = new System.Drawing.Point(13, 212);
-            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox3.Size = new System.Drawing.Size(420, 293);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Mesaj Paneli";
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button2.ForeColor = System.Drawing.Color.Black;
+            this.button2.Location = new System.Drawing.Point(200, 222);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(190, 58);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "Giden Kutusu";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // BtnUsers
             // 
             this.BtnUsers.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.BtnUsers.ForeColor = System.Drawing.Color.Black;
             this.BtnUsers.Location = new System.Drawing.Point(11, 222);
-            this.BtnUsers.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BtnUsers.Margin = new System.Windows.Forms.Padding(4);
             this.BtnUsers.Name = "BtnUsers";
             this.BtnUsers.Size = new System.Drawing.Size(181, 58);
             this.BtnUsers.TabIndex = 8;
@@ -199,18 +213,17 @@
             this.BtnUsers.UseVisualStyleBackColor = true;
             this.BtnUsers.Click += new System.EventHandler(this.BtnUsers_Click);
             // 
-            // button2
+            // pictureBox1
             // 
-            this.button2.Font = new System.Drawing.Font("Georgia", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(200, 222);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(190, 58);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Giden Kutusu";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(12, 64);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(67, 35);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // Mesaj
             // 
@@ -220,6 +233,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1206, 532);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.LblUsername);
@@ -238,6 +252,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,6 +272,7 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button BtnUsers;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

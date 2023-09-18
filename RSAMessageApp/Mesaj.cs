@@ -33,7 +33,6 @@ namespace RSAMessageApp
         private void Mesaj_Load(object sender, EventArgs e)
         {
             LblUsername.Text = $"Hoşgeldin {showUsername}";
-            dataGridView1.CellFormatting += new DataGridViewCellFormattingEventHandler(dataGridView1_CellFormatting);
             ShowMessages();
         }
 
@@ -124,6 +123,15 @@ namespace RSAMessageApp
             DataTable dt = new DataTable();
             da.Fill(dt);
             return dt;
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            ShowMessages();
+            TxtReceiver.Clear();
+            TxtTitle.Clear();
+            richTextBox1.Clear();
+            TxtReceiver.Focus();
         }
 
         public string EncryptAndSignMessage(string message, string receiverPublicKey, string senderPrivateKey)
@@ -517,32 +525,7 @@ namespace RSAMessageApp
             }
         }
 
-        //Groupbox ın title rengini değiştirmek için
-        //public class ColoredGroupBox : GroupBox
-        //{
-        //    private Color titleColor = Color.Red; // Başlık rengi varsayılan olarak mavi olsun
-
-        //    public Color TitleColor
-        //    {
-        //        get { return titleColor; }
-        //        set
-        //        {
-        //            titleColor = value;
-        //            this.Invalidate(); // Yeniden çizim için Invalidate çağırın
-        //        }
-        //    }
-
-        //    protected override void OnPaint(PaintEventArgs e)
-        //    {
-        //        base.OnPaint(e);
-
-        //        // Başlığı çizmek için bir Brush oluşturun
-        //        Brush brush = new SolidBrush(titleColor);
-
-        //        // Başlığı metni çizin
-        //        e.Graphics.DrawString(this.Text, this.Font, brush, new Point(10, 1));
-        //    }
-        //}
+        
 
         private void BtnUsers_Click(object sender, EventArgs e)
         {
@@ -558,22 +541,9 @@ namespace RSAMessageApp
             gdnmsj.Show();
         }
 
-        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.RowIndex >= 0 && dataGridView1.Columns[e.ColumnIndex].Name == "ReadStatus")
-            {
-                DataGridViewCell cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+       
 
-                if (cell.Value != null && cell.Value.ToString() == "True")
-                {
-                    e.CellStyle.ForeColor = Color.Blue;
-                }
-                else
-                {
-                    e.CellStyle.ForeColor = Color.Red;
-                }
-            }
-        }
+
     }
 }
 
